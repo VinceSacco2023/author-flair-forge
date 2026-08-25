@@ -3,3 +3,13 @@ import App from "./App.tsx";
 import "./index.css";
 
 createRoot(document.getElementById("root")!).render(<App />);
+
+// Offline support for the survey. Only in a built app — a service worker in
+// development would serve stale modules.
+if (import.meta.env.PROD && "serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js").catch(() => {
+      // An unavailable service worker costs nothing: the app still runs.
+    });
+  });
+}

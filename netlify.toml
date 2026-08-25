@@ -1,0 +1,11 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+# Single-page app: every path that is not a function or a file falls through
+# to index.html so /survey loads on a cold visit.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
