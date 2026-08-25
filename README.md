@@ -64,6 +64,35 @@ python3 scripts/build-artifact-page.py out.html   # strips the document wrapper
 
 Then publish `out.html` as an Artifact. Same survey, different envelope.
 
+## Publishing it on GitHub Pages
+
+`.github/workflows/pages.yml` builds the site and publishes it on every push to
+`main`. Two one-time switches in the repository:
+
+1. **Settings → General → Change repository visibility → Public.** Pages needs
+   a public repository unless the account is on GitHub Pro. Nothing secret lives
+   in this repository — API keys belong in the host's environment variables, and
+   `.env` files are ignored by git.
+2. **Settings → Pages → Build and deployment → Source: GitHub Actions.**
+
+The next push to `main` puts three things live:
+
+| Address | What it is |
+|---|---|
+| `https://<owner>.github.io/<repo>/` | the author landing page |
+| `https://<owner>.github.io/<repo>/survey` | the survey app |
+| `https://<owner>.github.io/<repo>/survey.html` | the standalone single-file survey |
+
+Pages serves the site from `/<repo>/` rather than the domain root, so the build
+sets Vite's `base`, the router's `basename` and the service worker scope from
+`VITE_BASE`, and copies `index.html` to `404.html` so a cold link straight to
+`/survey` still loads the app.
+
+Pages is static hosting: it cannot run `api/send-report.ts`, so on Pages the
+survey finishes with the reader's email app rather than sending by itself. For
+automatic delivery, host on Netlify or Vercel instead — same repository, same
+build, with the function included.
+
 ## Running it
 
 ```sh

@@ -7,11 +7,11 @@
  * they are delivered.
  */
 const CACHE = "wwidad-v1";
-const SHELL = "/index.html";
+const SHELL = new URL("index.html", self.registration.scope).pathname;
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE).then((cache) => cache.addAll([SHELL, "/manifest.webmanifest"])),
+    caches.open(CACHE).then((cache) => cache.addAll([SHELL, new URL("manifest.webmanifest", self.registration.scope).pathname])),
   );
   self.skipWaiting();
 });
@@ -34,7 +34,7 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
   // Report delivery must always hit the network.
-  if (url.pathname.startsWith("/api/")) return;
+  if (url.pathname.includes("/api/")) return;
 
   if (request.mode === "navigate") {
     event.respondWith(
