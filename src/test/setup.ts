@@ -13,3 +13,7 @@ Object.defineProperty(window, "matchMedia", {
     dispatchEvent: () => {},
   }),
 });
+
+// jsdom implements neither scroll method; the app calls both defensively.
+window.scrollTo = () => {};
+Element.prototype.scrollTo = () => {};

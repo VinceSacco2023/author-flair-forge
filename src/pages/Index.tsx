@@ -1,4 +1,5 @@
 import HeroSection from "@/components/HeroSection";
+import SurveyInvite from "@/components/SurveyInvite";
 import BookCard from "@/components/BookCard";
 import TestimonialBanner from "@/components/TestimonialBanner";
 import AuthorSection from "@/components/AuthorSection";
@@ -11,6 +12,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <HeroSection />
+      <SurveyInvite />
 
       {/* Books Section */}
       <section id="books" className="py-24 md:py-32 px-6">
