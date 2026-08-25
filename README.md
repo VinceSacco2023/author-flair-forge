@@ -29,6 +29,41 @@ A Vite + React + TypeScript site with two parts:
 The `.json` attachment is the same response flattened to one row of key/value
 pairs, so responses can be piled into a spreadsheet without retyping.
 
+## The standalone file: `public/survey.html`
+
+`public/survey.html` is the whole survey in **one file** — no build step, no
+dependencies, no server. Open it, email it, put it on any web host, or drop it
+in Dropbox or Google Drive and share the link. It works on any modern phone or
+computer, offline included, and it builds the same Word report in the browser.
+
+Out of the box it needs nothing configured: when the reader finishes, the file
+opens their email app with every answer already written in the message, addressed
+to you — they just press send. They can also download the Word report, share it
+through the phone's share sheet, or copy the answers as text.
+
+To make delivery automatic instead, open the file and edit the settings block
+near the top of the `<script>`:
+
+```js
+var CONFIG = {
+  authorEmail: "vincesacco2020@gmail.com",
+  authorName: "Vincenzo",
+  reportEndpoint: ""   // <- a URL here posts the answers silently
+};
+```
+
+Put your `/api/send-report` URL (or a form service such as Formspree or
+Web3Forms) in `reportEndpoint` and the answers are posted in the background with
+the Word report attached — the reader never sees the email step.
+
+To share it as a hosted page on claude.ai:
+
+```sh
+python3 scripts/build-artifact-page.py out.html   # strips the document wrapper
+```
+
+Then publish `out.html` as an Artifact. Same survey, different envelope.
+
 ## Running it
 
 ```sh

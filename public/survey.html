@@ -1,0 +1,1533 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>What Will I Do All Day?</title>
+<meta name="description" content="A four-minute survey about life after work, for the book What Will I Do All Day? by Vincenzo Sacco." />
+<meta name="theme-color" content="#0e1116" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="All Day" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230e1116'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%23e3b03e' stroke-width='4'/%3E%3Cpath d='M32 32V20M32 32l9 5' stroke='%23e3b03e' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" />
+<style>
+  /* The survey commits to one visual world — the dark, gold-on-ink look of
+     vincenzosacco.com — so every colour is painted explicitly and no theme
+     query is used. */
+  :root {
+    --ink: #0e1116;
+    --ink-raised: #151a21;
+    --card: #171d25;
+    --border: #262e39;
+    --border-strong: #39434f;
+    --gold: #e3b03e;
+    --gold-soft: #f0c96f;
+    --gold-dim: #a87e28;
+    --text: #ece8df;
+    --text-dim: #9aa3b0;
+    --radius: 14px;
+    --bar-height: 76px;
+    --display: "Playfair Display", Georgia, "Times New Roman", serif;
+    --body: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--ink);
+    color: var(--text);
+    font-family: var(--body);
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.55;
+  }
+
+  h1, h2, h3 { font-family: var(--display); font-weight: 600; text-wrap: balance; margin: 0; }
+
+  button { font: inherit; color: inherit; cursor: pointer; }
+
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+  .wrap { width: 100%; max-width: 40rem; margin: 0 auto; padding: 0 20px; }
+
+  /* Header ---------------------------------------------------------- */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: rgba(14, 17, 22, 0.94);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+    padding-top: max(12px, env(safe-area-inset-top));
+  }
+
+  .head-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+
+  .eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .counter { font-size: 0.8rem; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+
+  .track { height: 5px; border-radius: 999px; background: #1e242c; overflow: hidden; margin-top: 10px; }
+
+  .fill {
+    height: 100%;
+    width: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold-soft));
+    transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .saved { margin: 8px 0 0; font-size: 0.75rem; color: var(--text-dim); }
+  .saved.hidden { display: none; }
+
+  /* Screen ---------------------------------------------------------- */
+  main { flex: 1; padding: 30px 0 calc(var(--bar-height) + 40px); }
+
+  .screen { animation: rise 0.28s ease-out both; }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .screen { animation: none; }
+    .fill { transition: none; }
+  }
+
+  .q-title { font-size: clamp(1.5rem, 5.5vw, 2rem); line-height: 1.2; margin-bottom: 6px; }
+  .q-number { color: var(--gold); font-variant-numeric: tabular-nums; margin-right: 6px; }
+  .q-help { color: var(--text-dim); font-size: 0.92rem; margin: 0 0 22px; }
+
+  .choices { display: flex; flex-direction: column; gap: 10px; }
+
+  .choice {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    min-height: 58px;
+    padding: 14px 16px;
+    text-align: left;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.35;
+    transition: border-color 0.18s ease, background 0.18s ease, transform 0.1s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .choice:active { transform: scale(0.99); }
+  .choice[aria-pressed="true"] { border-color: var(--gold); background: rgba(227, 176, 62, 0.1); }
+
+  .marker {
+    flex: 0 0 auto;
+    width: 22px;
+    height: 22px;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    transition: border-color 0.18s ease, background 0.18s ease;
+  }
+
+  .marker.square { border-radius: 6px; }
+  .choice[aria-pressed="true"] .marker { border-color: var(--gold); background: var(--gold); }
+  .marker svg { width: 14px; height: 14px; opacity: 0; }
+  .choice[aria-pressed="true"] .marker svg { opacity: 1; }
+
+  input[type="text"], input[type="email"], input[type="tel"], textarea {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 1rem; /* 16px keeps iOS from zooming on focus */
+    padding: 14px 16px;
+    -webkit-appearance: none;
+  }
+
+  input:focus, textarea:focus { border-color: var(--gold); outline: none; }
+  ::placeholder { color: #6d7684; }
+
+  textarea { min-height: 170px; line-height: 1.6; resize: vertical; }
+
+  .other-text { margin-top: 8px; }
+
+  .field { display: flex; flex-direction: column; gap: 8px; }
+  .field-label { font-size: 0.85rem; color: var(--text-dim); }
+  .fields { display: flex; flex-direction: column; gap: 18px; }
+  .two-up { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .scale { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+
+  .scale button {
+    aspect-ratio: 1;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    font-size: 1.3rem;
+    font-variant-numeric: tabular-nums;
+    transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
+  }
+
+  .scale button[aria-pressed="true"] { background: var(--gold); border-color: var(--gold); color: #14181f; font-weight: 600; }
+
+  .scale-labels { display: flex; justify-content: space-between; gap: 16px; margin-top: 12px; font-size: 0.78rem; color: var(--text-dim); }
+  .scale-labels span:last-child { text-align: right; }
+
+  .word-count { margin: 8px 0 0; text-align: right; font-size: 0.75rem; color: var(--text-dim); font-variant-numeric: tabular-nums; min-height: 1.2em; }
+
+  /* Buttons --------------------------------------------------------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 52px;
+    padding: 0 22px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  a.btn { text-decoration: none; }
+  .btn-primary { background: var(--gold); color: #14181f; font-weight: 600; }
+  .btn-primary:hover { background: var(--gold-soft); }
+  .btn-outline { background: transparent; border-color: var(--border-strong); color: var(--text); }
+  .btn-outline:hover { border-color: var(--gold); background: rgba(227, 176, 62, 0.08); }
+  .btn-quiet { background: transparent; color: var(--text-dim); padding: 0 14px; }
+  .btn-quiet:hover { color: var(--text); }
+  .btn-block { width: 100%; }
+  .btn[disabled] { opacity: 0.55; pointer-events: none; }
+
+  .stack { display: flex; flex-direction: column; gap: 12px; }
+
+  /* Bottom bar ------------------------------------------------------ */
+  .bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    background: rgba(14, 17, 22, 0.96);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .bar-row { display: flex; align-items: center; gap: 10px; height: var(--bar-height); }
+  .bar-spacer { flex: 1; }
+  .bar.hidden { display: none; }
+
+  /* Intro, review, done --------------------------------------------- */
+  .lede { font-size: 1.02rem; color: #cfcbc2; }
+  .lede p { margin: 0 0 14px; }
+
+  .facts { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 18px 0 24px; font-size: 0.86rem; color: var(--text-dim); }
+  .facts span { display: inline-flex; align-items: center; gap: 8px; }
+  .facts svg { color: var(--gold); }
+
+  .title-block { margin-bottom: 22px; }
+  .title-block h1 { font-size: clamp(2.1rem, 9vw, 3rem); line-height: 1.05; }
+  .title-block .eyebrow { display: block; margin-bottom: 12px; }
+
+  .part-group { margin-bottom: 26px; }
+  .part-group h3 { font-family: var(--body); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 10px; }
+
+  .answer-list { list-style: none; margin: 0; padding: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--card); }
+  .answer-list li + li { border-top: 1px solid var(--border); }
+
+  .answer-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    width: 100%;
+    padding: 14px 16px;
+    background: none;
+    border: 0;
+    text-align: left;
+    transition: background 0.15s ease;
+  }
+
+  .answer-row:hover { background: rgba(255, 255, 255, 0.03); }
+  .answer-q { font-size: 0.82rem; color: var(--text-dim); display: block; margin-bottom: 3px; }
+  .answer-a { font-size: 1rem; white-space: pre-line; }
+  .answer-a.skipped { color: #6d7684; font-style: italic; }
+  .answer-row svg { flex: 0 0 auto; color: var(--text-dim); margin-top: 3px; }
+
+  .done { text-align: center; }
+  .done h2 { font-size: clamp(1.8rem, 7vw, 2.4rem); line-height: 1.15; margin-bottom: 14px; }
+  .done p { color: #cfcbc2; margin: 0 0 16px; }
+  .done .note { color: var(--text-dim); font-size: 0.88rem; }
+  .seal { width: 60px; height: 60px; margin: 0 auto 20px; color: var(--gold); }
+  .ref { margin-top: 22px; font-size: 0.75rem; color: #6d7684; }
+
+  .status { margin: 14px 0 0; font-size: 0.85rem; color: var(--gold); min-height: 1.2em; }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: grid;
+    place-items: center;
+    gap: 14px;
+    background: rgba(14, 17, 22, 0.86);
+    backdrop-filter: blur(4px);
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+
+  .overlay.hidden { display: none; }
+
+  .spinner {
+    width: 34px;
+    height: 34px;
+    border: 3px solid #262e39;
+    border-top-color: var(--gold);
+    border-radius: 999px;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (min-width: 700px) {
+    main { padding-top: 44px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="head-row">
+      <span class="eyebrow" id="part-label">What Will I Do All Day?</span>
+      <span class="counter" id="counter"></span>
+    </div>
+    <div class="track"><div class="fill" id="fill"></div></div>
+    <p class="saved hidden" id="saved"></p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap" id="screen"></div>
+</main>
+
+<div class="bar hidden" id="bar">
+  <div class="wrap bar-row">
+    <button class="btn btn-quiet" id="back">Back</button>
+    <span class="bar-spacer"></span>
+    <button class="btn btn-quiet" id="skip">Skip</button>
+    <button class="btn btn-primary" id="next">Continue</button>
+  </div>
+</div>
+
+<div class="overlay hidden" id="overlay">
+  <div class="spinner"></div>
+  <p id="overlay-text">Building your report…</p>
+</div>
+
+<script>
+"use strict";
+
+/* ==================================================================
+   SETTINGS — the only part you ever need to edit.
+   ------------------------------------------------------------------
+   authorEmail   Where answers are sent. The "Email my answers" button
+                 opens the reader's mail app addressed here.
+   reportEndpoint Optional. Leave "" and the survey works with no server
+                 at all. Put a URL here (your own /api/send-report, or a
+                 form service such as Formspree or Web3Forms) and the
+                 answers are posted silently instead, with the Word
+                 report attached — the reader does nothing.
+   ================================================================== */
+var CONFIG = {
+  authorEmail: "vincesacco2020@gmail.com",
+  authorName: "Vincenzo",
+  reportEndpoint: ""
+};
+
+/* ---------- The survey ------------------------------------------- */
+
+var PARTS = [
+  "Part 1 — Where you are",
+  "Part 2 — The big two",
+  "Part 3 — The hard ones",
+  "Part 4 — Work, money and help",
+  "Part 5 — How it feels",
+  "Part 6 — About you"
+];
+
+var QUESTIONS = [
+  { id: "stage", part: 0, kind: "single", title: "Where are you in the retirement process?", help: "Choose one", choices: [
+    { id: "retired_2plus", label: "Retired more than two years ago" },
+    { id: "retired_recent", label: "Retired within the last two years" },
+    { id: "retiring_12m", label: "Retiring within the next 12 months" },
+    { id: "retiring_1_5y", label: "Retiring in one to five years" },
+    { id: "more_than_5y", label: "More than five years away" },
+    { id: "never_fully", label: "I don't plan to fully retire" }
+  ]},
+  { id: "work_type", part: 0, kind: "single", title: "What kind of work did you do — or do you still do?", help: "Choose one", choices: [
+    { id: "trade", label: "Skilled trade or manufacturing" },
+    { id: "healthcare", label: "Healthcare" },
+    { id: "education", label: "Education" },
+    { id: "office", label: "Office, admin or professional services" },
+    { id: "management", label: "Management or executive" },
+    { id: "transport", label: "Transport, logistics or driving" },
+    { id: "public_sector", label: "Public sector, military or emergency services" },
+    { id: "self_employed", label: "Self-employed or business owner" },
+    { id: "other", label: "Other", text: true }
+  ]},
+  { id: "bigger_worry", part: 1, kind: "single", title: "Which worries you more?", help: "Choose one", choices: [
+    { id: "money", label: "Running out of money" },
+    { id: "things_to_do", label: "Running out of things to do" },
+    { id: "both", label: "Both equally" },
+    { id: "neither", label: "Neither — I feel ready" }
+  ]},
+  { id: "normal_tuesday", part: 1, kind: "single", title: "Can you describe what a normal Tuesday will look like six months after you retire?", help: "Choose one", choices: [
+    { id: "hour_by_hour", label: "Yes — clearly, hour by hour" },
+    { id: "roughly", label: "Roughly, in general terms" },
+    { id: "not_really", label: "Not really" },
+    { id: "no_idea", label: "No idea at all" }
+  ]},
+  { id: "good_at", part: 2, kind: "text", title: "What are you good at?", help: "Anything at all — from work or outside it. Write as much or as little as you like.", placeholder: "The things people ask you for, the things that come easily…" },
+  { id: "love_doing", part: 2, kind: "text", title: "What do you love doing?", placeholder: "The parts of a day you would not want to give up…" },
+  { id: "never_again", part: 2, kind: "multi", title: "What is the one thing about work you never want to do again?", help: "Tick all that apply", exclusive: ["liked_job"], choices: [
+    { id: "early_mornings", label: "Early mornings" },
+    { id: "late_nights", label: "Late nights or shift work" },
+    { id: "commuting", label: "Commuting" },
+    { id: "travel", label: "Travel" },
+    { id: "managing_people", label: "Managing people" },
+    { id: "deadlines", label: "Deadlines and pressure" },
+    { id: "meetings", label: "Meetings" },
+    { id: "on_call", label: "Being on call" },
+    { id: "physical_strain", label: "Physical strain" },
+    { id: "office_politics", label: "Office politics" },
+    { id: "liked_job", label: "Nothing — I liked my job" },
+    { id: "other", label: "Other", text: true }
+  ]},
+  { id: "earn_money", part: 3, kind: "single", title: "Do you want to earn money after you retire?", help: "Choose one", choices: [
+    { id: "need_income", label: "Yes — I need real income" },
+    { id: "supplemental", label: "Yes — but only supplemental, no pressure" },
+    { id: "if_it_pays", label: "Only if it happens to pay" },
+    { id: "done_earning", label: "No — I'm done earning" },
+    { id: "not_sure", label: "Not sure" }
+  ]},
+  { id: "hours_week", part: 3, kind: "single", title: "How many hours a week would you want to work, if any?", help: "Choose one", choices: [
+    { id: "none", label: "None" },
+    { id: "under_5", label: "Under 5" },
+    { id: "5_10", label: "5 to 10" },
+    { id: "10_20", label: "10 to 20" },
+    { id: "20_30", label: "20 to 30" },
+    { id: "30_plus", label: "More than 30" }
+  ]},
+  { id: "talked_to", part: 3, kind: "multi", title: "Who have you talked to about what you'll do with your time — not the money side?", help: "Tick all that apply", exclusive: ["nobody"], choices: [
+    { id: "spouse", label: "My spouse or partner" },
+    { id: "friends", label: "Friends" },
+    { id: "adviser", label: "My financial adviser" },
+    { id: "employer", label: "My employer or HR" },
+    { id: "coach", label: "A coach or counsellor" },
+    { id: "nobody", label: "Nobody" }
+  ]},
+  { id: "tried", part: 3, kind: "multi", title: "Have you tried anything to figure this out?", help: "Tick all that apply", exclusive: ["nothing_yet"], choices: [
+    { id: "read_book", label: "Read a book about retirement" },
+    { id: "employer_programme", label: "Employer pre-retirement programme" },
+    { id: "hired_coach", label: "Hired a coach" },
+    { id: "online_quizzes", label: "Online quizzes or frameworks" },
+    { id: "talked_family", label: "Talked it through with family" },
+    { id: "nothing_yet", label: "Nothing yet" }
+  ]},
+  { id: "first_year_worry", part: 4, kind: "text", title: "What worries you most about the first year?", placeholder: "Say it plainly — this is the part the book is really about…" },
+  { id: "confidence", part: 4, kind: "scale", title: "How confident are you that you'll enjoy retirement?", min: 1, max: 5, minLabel: "Not at all confident", maxLabel: "Completely confident" },
+  { id: "about_you", part: 5, kind: "details", title: "A few details", help: "All optional." },
+  { id: "contact", part: 5, kind: "contact", title: "Would you like a free personalised plan?", help: "Leave your email and I'll send you one. Your email will only be used for this and nothing else.", consent: "Yes, you may contact me about this survey and the free plan." }
+];
+
+var INTRO = [
+  "This takes about four minutes.",
+  "There are no right answers, and none of this is about money. I am writing a book about what people actually do after they stop working, and I need real answers from real people.",
+  "Everything is anonymous unless you choose to leave your email at the end. Answers may be quoted anonymously in the book. Skip any question you would rather not answer."
+];
+
+var CLOSING = "Thank you. That is the whole survey. If you know someone else retiring in the next year or two, please pass this on. The more people who answer, the more useful the results will be for everyone.";
+
+/* ---------- Answers ---------------------------------------------- */
+
+var state = { phase: "intro", step: 0, answers: {}, startedAt: new Date().toISOString(), response: null, sent: false };
+
+var DRAFT_KEY = "wwidad.survey.draft.v1";
+
+function readDraft() {
+  try {
+    var raw = window.localStorage.getItem(DRAFT_KEY);
+    if (!raw) return null;
+    var parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" && parsed.answers ? parsed : null;
+  } catch (error) { return null; }
+}
+
+function saveDraft() {
+  try {
+    window.localStorage.setItem(DRAFT_KEY, JSON.stringify({
+      answers: state.answers, step: state.step, startedAt: state.startedAt
+    }));
+  } catch (error) { /* private browsing: the survey still works, it just cannot be resumed */ }
+}
+
+function clearDraft() {
+  try { window.localStorage.removeItem(DRAFT_KEY); } catch (error) { /* ignore */ }
+}
+
+function answerOf(question) {
+  var stored = state.answers[question.id];
+  if (stored) return stored;
+  if (question.kind === "multi") return { ids: [] };
+  if (question.kind === "details") return { age: "", years: "", partner: "", region: "" };
+  if (question.kind === "contact") return { email: "", consent: false };
+  return {};
+}
+
+function isAnswered(question) {
+  var a = state.answers[question.id];
+  if (!a) return false;
+  switch (question.kind) {
+    case "single": return !!a.id;
+    case "multi": return !!(a.ids && a.ids.length);
+    case "text": return !!(a.text && a.text.trim());
+    case "scale": return !!a.value;
+    case "details": return !!((a.age || "").trim() || (a.years || "").trim() || a.partner || (a.region || "").trim());
+    case "contact": return !!(a.email && a.email.trim());
+  }
+  return false;
+}
+
+function answeredCount() {
+  return QUESTIONS.filter(isAnswered).length;
+}
+
+function choiceLabel(question, id) {
+  for (var i = 0; i < question.choices.length; i++) {
+    if (question.choices[i].id === id) return question.choices[i].label;
+  }
+  return id;
+}
+
+function withOther(question, id, otherText) {
+  var label = choiceLabel(question, id);
+  for (var i = 0; i < question.choices.length; i++) {
+    if (question.choices[i].id === id && question.choices[i].text && otherText && otherText.trim()) {
+      return label + ": " + otherText.trim();
+    }
+  }
+  return label;
+}
+
+/** One readable line for an answer — used by the report and the email. */
+function formatAnswer(question) {
+  if (!isAnswered(question)) return "(skipped)";
+  var a = state.answers[question.id];
+  switch (question.kind) {
+    case "single": return withOther(question, a.id, a.otherText);
+    case "multi": return a.ids.map(function (id) { return withOther(question, id, a.otherText); }).join("; ");
+    case "text": return a.text.trim();
+    case "scale": return a.value + " out of " + question.max;
+    case "details": {
+      var bits = [];
+      if ((a.age || "").trim()) bits.push("Age " + a.age.trim());
+      if ((a.years || "").trim()) bits.push(a.years.trim() + " years in main career");
+      if (a.partner) bits.push(a.partner === "yes" ? "Lives with a partner" : "Does not live with a partner");
+      if ((a.region || "").trim()) bits.push(a.region.trim());
+      return bits.join(" · ");
+    }
+    case "contact": return a.email.trim() + (a.consent ? " (consented to contact)" : " (no contact consent given)");
+  }
+  return "";
+}
+
+function singleId(id) {
+  var a = state.answers[id];
+  return a && a.id ? a.id : "";
+}
+
+function multiIds(id) {
+  var a = state.answers[id];
+  return a && a.ids ? a.ids : [];
+}
+
+function questionById(id) {
+  for (var i = 0; i < QUESTIONS.length; i++) if (QUESTIONS[i].id === id) return QUESTIONS[i];
+  return null;
+}
+
+/** The cross-cut readings that make one response useful beside a hundred. */
+function signals() {
+  var out = [];
+  var stage = singleId("stage");
+  out.push(["Horizon", !stage ? "Not given"
+    : stage === "retired_2plus" || stage === "retired_recent" ? "Already retired"
+    : stage === "retiring_12m" ? "Retiring within 12 months"
+    : choiceLabel(questionById("stage"), stage)]);
+
+  var worry = singleId("bigger_worry");
+  out.push(["Bigger worry", !worry ? "Not given"
+    : worry === "things_to_do" ? "Time, not money"
+    : worry === "money" ? "Money, not time"
+    : worry === "both" ? "Both equally" : "Feels ready"]);
+
+  var tuesday = singleId("normal_tuesday");
+  out.push(["Day clarity", !tuesday ? "Not given"
+    : tuesday === "no_idea" || tuesday === "not_really" ? "Cannot picture a normal Tuesday"
+    : tuesday === "hour_by_hour" ? "Can picture it hour by hour" : "Can picture it roughly"]);
+
+  var earn = singleId("earn_money");
+  var hours = singleId("hours_week");
+  var hoursText = hours ? ", " + choiceLabel(questionById("hours_week"), hours).toLowerCase() + " hours a week" : "";
+  out.push(["Work intent", !earn ? "Not given"
+    : earn === "done_earning" ? "Done earning"
+    : earn === "need_income" ? "Needs real income" + hoursText
+    : earn === "supplemental" ? "Supplemental only" + hoursText
+    : earn === "if_it_pays" ? "Would work, pay is a bonus" : "Undecided"]);
+
+  var confidence = state.answers.confidence;
+  out.push(["Confidence", confidence && confidence.value ? confidence.value + " out of 5" : "Not given"]);
+
+  var talked = multiIds("talked_to");
+  out.push(["Support", !talked.length ? "Not given"
+    : talked.indexOf("nobody") !== -1 ? "Has talked to nobody"
+    : "Has talked to " + talked.length + " source" + (talked.length > 1 ? "s" : "")]);
+
+  var tried = multiIds("tried");
+  out.push(["Prior effort", !tried.length ? "Not given"
+    : tried.indexOf("nothing_yet") !== -1 ? "Has tried nothing yet"
+    : "Has tried " + tried.length + " approach" + (tried.length > 1 ? "es" : "")]);
+
+  return out;
+}
+
+function profileLine() {
+  var bits = [];
+  var stage = questionById("stage");
+  if (isAnswered(stage)) bits.push(formatAnswer(stage));
+  var work = questionById("work_type");
+  if (isAnswered(work)) bits.push(formatAnswer(work).toLowerCase());
+  var details = state.answers.about_you;
+  if (details) {
+    if ((details.age || "").trim()) bits.push("age " + details.age.trim());
+    if ((details.region || "").trim()) bits.push(details.region.trim());
+  }
+  return bits.length ? bits.join(", ") : "No profile details given";
+}
+
+/* ---------- ZIP (a .docx is a ZIP of XML parts) ------------------- */
+
+var crcTable = (function () {
+  var table = new Uint32Array(256);
+  for (var i = 0; i < 256; i++) {
+    var c = i;
+    for (var k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+    table[i] = c >>> 0;
+  }
+  return table;
+})();
+
+function crc32(bytes) {
+  var crc = 0xffffffff;
+  for (var i = 0; i < bytes.length; i++) crc = crcTable[(crc ^ bytes[i]) & 0xff] ^ (crc >>> 8);
+  return (crc ^ 0xffffffff) >>> 0;
+}
+
+function ByteWriter() { this.chunks = []; this.length = 0; }
+ByteWriter.prototype.push = function (bytes) { this.chunks.push(bytes); this.length += bytes.length; };
+ByteWriter.prototype.u16 = function (v) { var b = new Uint8Array(2); new DataView(b.buffer).setUint16(0, v, true); this.push(b); };
+ByteWriter.prototype.u32 = function (v) { var b = new Uint8Array(4); new DataView(b.buffer).setUint32(0, v >>> 0, true); this.push(b); };
+ByteWriter.prototype.bytes = function () {
+  var out = new Uint8Array(this.length), offset = 0;
+  for (var i = 0; i < this.chunks.length; i++) { out.set(this.chunks[i], offset); offset += this.chunks[i].length; }
+  return out;
+};
+
+function createZip(entries, now) {
+  var time = (now.getHours() << 11) | (now.getMinutes() << 5) | (now.getSeconds() >> 1);
+  var date = ((now.getFullYear() - 1980) << 9) | ((now.getMonth() + 1) << 5) | now.getDate();
+  var body = new ByteWriter(), central = new ByteWriter(), encoder = new TextEncoder();
+
+  entries.forEach(function (entry) {
+    var name = encoder.encode(entry.path);
+    var data = encoder.encode(entry.content);
+    var crc = crc32(data);
+    var offset = body.length;
+
+    body.u32(0x04034b50); body.u16(20); body.u16(0x0800); body.u16(0);
+    body.u16(time); body.u16(date); body.u32(crc);
+    body.u32(data.length); body.u32(data.length);
+    body.u16(name.length); body.u16(0);
+    body.push(name); body.push(data);
+
+    central.u32(0x02014b50); central.u16(20); central.u16(20); central.u16(0x0800); central.u16(0);
+    central.u16(time); central.u16(date); central.u32(crc);
+    central.u32(data.length); central.u32(data.length);
+    central.u16(name.length); central.u16(0); central.u16(0);
+    central.u16(0); central.u16(0); central.u32(0); central.u32(offset);
+    central.push(name);
+  });
+
+  var out = new ByteWriter();
+  var bodyBytes = body.bytes(), centralBytes = central.bytes();
+  out.push(bodyBytes); out.push(centralBytes);
+  out.u32(0x06054b50); out.u16(0); out.u16(0);
+  out.u16(entries.length); out.u16(entries.length);
+  out.u32(centralBytes.length); out.u32(bodyBytes.length); out.u16(0);
+  return out.bytes();
+}
+
+function bytesToBase64(bytes) {
+  var binary = "", chunk = 0x8000;
+  for (var i = 0; i < bytes.length; i += chunk) {
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+  }
+  return btoa(binary);
+}
+
+/* ---------- The Word report -------------------------------------- */
+
+function esc(text) {
+  return String(text)
+    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+}
+
+function para(text, options) {
+  options = options || {};
+  var pPr = (options.style ? '<w:pStyle w:val="' + options.style + '"/>' : "") +
+            (options.after !== undefined ? '<w:spacing w:after="' + options.after + '"/>' : "");
+  var rPr = (options.bold ? "<w:b/>" : "") + (options.italic ? "<w:i/>" : "") +
+            (options.color ? '<w:color w:val="' + options.color + '"/>' : "") +
+            (options.size ? '<w:sz w:val="' + options.size + '"/>' : "");
+  return "<w:p>" + (pPr ? "<w:pPr>" + pPr + "</w:pPr>" : "") +
+         "<w:r>" + (rPr ? "<w:rPr>" + rPr + "</w:rPr>" : "") +
+         '<w:t xml:space="preserve">' + esc(text) + "</w:t></w:r></w:p>";
+}
+
+function multiline(text, options) {
+  return String(text).split(/\r?\n/).map(function (line) { return para(line, options); }).join("");
+}
+
+function cell(text, widthPct, bold) {
+  return '<w:tc><w:tcPr><w:tcW w:w="' + widthPct * 50 + '" w:type="pct"/>' +
+         '<w:tcMar><w:top w:w="80" w:type="dxa"/><w:bottom w:w="80" w:type="dxa"/>' +
+         '<w:left w:w="120" w:type="dxa"/><w:right w:w="120" w:type="dxa"/></w:tcMar></w:tcPr>' +
+         para(text, { bold: bold, after: 0 }) + "</w:tc>";
+}
+
+function table(rows) {
+  var borders = "<w:tblBorders>" + ["top", "left", "bottom", "right", "insideH", "insideV"].map(function (side) {
+    return "<w:" + side + ' w:val="single" w:sz="4" w:space="0" w:color="D9D9D9"/>';
+  }).join("") + "</w:tblBorders>";
+  var body = rows.map(function (row) {
+    return "<w:tr>" + cell(row[0], 34, true) + cell(row[1], 66, false) + "</w:tr>";
+  }).join("");
+  return '<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/>' + borders + "</w:tblPr>" + body + "</w:tbl>";
+}
+
+var STYLES_XML =
+  '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+  '<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">' +
+  '<w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/><w:sz w:val="22"/></w:rPr></w:rPrDefault>' +
+  '<w:pPrDefault><w:pPr><w:spacing w:after="140" w:line="276" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults>' +
+  '<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style>' +
+  '<w:style w:type="paragraph" w:styleId="Title"><w:name w:val="Title"/><w:pPr><w:spacing w:after="60"/></w:pPr>' +
+  '<w:rPr><w:rFonts w:ascii="Georgia" w:hAnsi="Georgia"/><w:b/><w:sz w:val="48"/><w:color w:val="1A1F2B"/></w:rPr></w:style>' +
+  '<w:style w:type="paragraph" w:styleId="Subtitle"><w:name w:val="Subtitle"/><w:pPr><w:spacing w:after="40"/></w:pPr>' +
+  '<w:rPr><w:rFonts w:ascii="Georgia" w:hAnsi="Georgia"/><w:sz w:val="28"/><w:color w:val="B8862B"/></w:rPr></w:style>' +
+  '<w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/>' +
+  '<w:pPr><w:spacing w:before="360" w:after="120"/><w:pBdr><w:bottom w:val="single" w:sz="6" w:space="4" w:color="B8862B"/></w:pBdr></w:pPr>' +
+  '<w:rPr><w:rFonts w:ascii="Georgia" w:hAnsi="Georgia"/><w:b/><w:sz w:val="30"/><w:color w:val="1A1F2B"/></w:rPr></w:style>' +
+  '<w:style w:type="paragraph" w:styleId="Heading2"><w:name w:val="heading 2"/><w:pPr><w:spacing w:before="280" w:after="100"/></w:pPr>' +
+  '<w:rPr><w:b/><w:sz w:val="24"/><w:color w:val="4A4F5C"/></w:rPr></w:style>' +
+  '<w:style w:type="paragraph" w:styleId="Quote"><w:name w:val="Quote"/>' +
+  '<w:pPr><w:ind w:left="360"/><w:spacing w:after="80"/><w:pBdr><w:left w:val="single" w:sz="12" w:space="8" w:color="B8862B"/></w:pBdr></w:pPr>' +
+  '<w:rPr><w:i/><w:color w:val="2B2F3A"/></w:rPr></w:style></w:styles>';
+
+var CONTENT_TYPES_XML =
+  '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+  '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
+  '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
+  '<Default Extension="xml" ContentType="application/xml"/>' +
+  '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>' +
+  '<Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/>' +
+  '<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/></Types>';
+
+var ROOT_RELS_XML =
+  '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+  '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+  '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>' +
+  '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/></Relationships>';
+
+var DOCUMENT_RELS_XML =
+  '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+  '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+  '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>';
+
+function documentXml(response) {
+  var blocks = [];
+  blocks.push(para("What Will I Do All Day?", { style: "Title" }));
+  blocks.push(para("Survey response report", { style: "Subtitle" }));
+  blocks.push(para("Response " + response.responseId + " · submitted " + new Date(response.submittedAt).toLocaleString(), { italic: true, color: "666666", size: 18 }));
+
+  blocks.push(para("At a glance", { style: "Heading1" }));
+  blocks.push(para(profileLine(), { bold: true }));
+  var rows = signals().slice();
+  rows.push(["Questions answered", answeredCount() + " of " + QUESTIONS.length]);
+  rows.push(["Time taken", response.minutesTaken + " minute" + (response.minutesTaken === 1 ? "" : "s")]);
+  rows.push(["Timezone", response.timezone]);
+  blocks.push(table(rows));
+  blocks.push(para(""));
+
+  var quotes = QUESTIONS.filter(function (q) { return q.kind === "text" && isAnswered(q); });
+  if (quotes.length) {
+    blocks.push(para("In their own words", { style: "Heading1" }));
+    quotes.forEach(function (question) {
+      blocks.push(para(question.title, { bold: true, after: 60 }));
+      blocks.push(multiline(formatAnswer(question), { style: "Quote" }));
+    });
+    blocks.push(para(""));
+  }
+
+  blocks.push(para("Every answer", { style: "Heading1" }));
+  PARTS.forEach(function (partName, partIndex) {
+    blocks.push(para(partName, { style: "Heading2" }));
+    QUESTIONS.forEach(function (question, index) {
+      if (question.part !== partIndex) return;
+      blocks.push(para((index + 1) + ". " + question.title, { bold: true, after: 40 }));
+      if (!isAnswered(question)) { blocks.push(para("Skipped", { italic: true, color: "888888" })); return; }
+      if (question.kind === "text") blocks.push(multiline(formatAnswer(question), { style: "Quote" }));
+      else blocks.push(para(formatAnswer(question)));
+    });
+  });
+
+  var contact = state.answers.contact;
+  if (contact && (contact.email || "").trim()) {
+    blocks.push(para("Follow-up", { style: "Heading1" }));
+    blocks.push(para("Email: " + contact.email.trim()));
+    blocks.push(para(contact.consent
+      ? "This person consented to being contacted about the survey and the free personalised plan."
+      : "This person left an email address but did not tick the consent box. Do not contact them.",
+      { bold: !contact.consent }));
+  }
+
+  blocks.push(para(""));
+  blocks.push(para(CLOSING, { italic: true, color: "666666", size: 18 }));
+
+  return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+    '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>' +
+    blocks.join("") +
+    '<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr>' +
+    "</w:body></w:document>";
+}
+
+function coreXml(response) {
+  return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+    '<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" ' +
+    'xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" ' +
+    'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
+    "<dc:title>" + esc("What Will I Do All Day? - response " + response.responseId) + "</dc:title>" +
+    "<dc:subject>Retirement survey response</dc:subject>" +
+    "<dc:creator>What Will I Do All Day? survey</dc:creator>" +
+    "<cp:lastModifiedBy>What Will I Do All Day? survey</cp:lastModifiedBy>" +
+    '<dcterms:created xsi:type="dcterms:W3CDTF">' + esc(response.submittedAt) + "</dcterms:created>" +
+    '<dcterms:modified xsi:type="dcterms:W3CDTF">' + esc(response.submittedAt) + "</dcterms:modified>" +
+    "</cp:coreProperties>";
+}
+
+function buildDocx(response) {
+  return createZip([
+    { path: "[Content_Types].xml", content: CONTENT_TYPES_XML },
+    { path: "_rels/.rels", content: ROOT_RELS_XML },
+    { path: "docProps/core.xml", content: coreXml(response) },
+    { path: "word/_rels/document.xml.rels", content: DOCUMENT_RELS_XML },
+    { path: "word/document.xml", content: documentXml(response) },
+    { path: "word/styles.xml", content: STYLES_XML }
+  ], new Date(response.submittedAt));
+}
+
+/* ---------- Building and sending a response ---------------------- */
+
+function buildResponse() {
+  var bytes = new Uint8Array(4);
+  if (window.crypto && window.crypto.getRandomValues) window.crypto.getRandomValues(bytes);
+  else for (var i = 0; i < 4; i++) bytes[i] = Math.floor(Math.random() * 256);
+  var id = Array.prototype.map.call(bytes, function (b) { return ("0" + b.toString(16)).slice(-2); }).join("");
+
+  var started = new Date(state.startedAt).getTime();
+  var minutes = isNaN(started) ? 0 : Math.max(0, Math.round((Date.now() - started) / 60000));
+  var zone = "unknown";
+  try { zone = Intl.DateTimeFormat().resolvedOptions().timeZone || "unknown"; } catch (error) { /* older browsers */ }
+
+  return {
+    responseId: id,
+    submittedAt: new Date().toISOString(),
+    minutesTaken: minutes,
+    timezone: zone,
+    fileName: "WhatWillIDoAllDay-" + new Date().toISOString().slice(0, 10) + "-" + id + ".docx"
+  };
+}
+
+/** Every answer as plain text — the body of the email, and the clipboard copy. */
+function plainTextReport(response) {
+  var lines = [];
+  lines.push("What Will I Do All Day? — survey response");
+  lines.push("Response " + response.responseId + " · " + new Date(response.submittedAt).toLocaleString());
+  lines.push("");
+  lines.push(profileLine());
+  lines.push("");
+  signals().forEach(function (signal) { lines.push(signal[0] + ": " + signal[1]); });
+  lines.push("");
+  lines.push("--- All answers ---");
+  PARTS.forEach(function (partName, partIndex) {
+    lines.push("");
+    lines.push(partName.toUpperCase());
+    QUESTIONS.forEach(function (question, index) {
+      if (question.part !== partIndex) return;
+      lines.push("");
+      lines.push((index + 1) + ". " + question.title);
+      lines.push(isAnswered(question) ? formatAnswer(question) : "Skipped");
+    });
+  });
+  lines.push("");
+  lines.push("Answered " + answeredCount() + " of " + QUESTIONS.length + " questions in " + response.minutesTaken + " minute(s).");
+  return lines.join("\n");
+}
+
+function shortSummary(response) {
+  var lines = ['New response to "What Will I Do All Day?"', "", profileLine(), ""];
+  signals().forEach(function (signal) { lines.push(signal[0] + ": " + signal[1]); });
+  lines.push("");
+  lines.push("Answered " + answeredCount() + " of " + QUESTIONS.length + " questions in " + response.minutesTaken + " minute(s).");
+  lines.push("");
+  lines.push("The full report is attached as a Word document.");
+  return lines.join("\n");
+}
+
+function flatRecord(response) {
+  var row = {
+    response_id: response.responseId,
+    submitted_at: response.submittedAt,
+    minutes_taken: String(response.minutesTaken),
+    timezone: response.timezone
+  };
+  QUESTIONS.forEach(function (question) { row[question.id] = formatAnswer(question); });
+  return row;
+}
+
+function postReport(response, docxBytes) {
+  if (!CONFIG.reportEndpoint) return Promise.resolve(false);
+  return fetch(CONFIG.reportEndpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      responseId: response.responseId,
+      submittedAt: response.submittedAt,
+      summary: shortSummary(response),
+      fileName: response.fileName,
+      docxBase64: bytesToBase64(docxBytes),
+      data: flatRecord(response)
+    })
+  }).then(function (res) { return res.ok; }).catch(function () { return false; });
+}
+
+function mailtoLink(response) {
+  var subject = "What Will I Do All Day? — my answers (" + response.responseId + ")";
+  return "mailto:" + encodeURIComponent(CONFIG.authorEmail) +
+    "?subject=" + encodeURIComponent(subject) +
+    "&body=" + encodeURIComponent(plainTextReport(response));
+}
+
+/** Hands the Word file to the reader, whichever way this browser allows. */
+function saveReport(response, onStatus) {
+  var bytes = buildDocx(response);
+  var blob = new Blob([bytes], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+
+  // Inside the claude.ai viewer, a page can only save through the host.
+  if (window.claude && typeof window.claude.use === "function") {
+    window.claude.use("downloads").then(function (downloads) {
+      if (!downloads) return anchorSave(blob, response.fileName);
+      downloads.save({ filename: response.fileName, data: bytes.slice(0) }).catch(function (error) {
+        if (error && error.code === "declined") return;
+        // Word files are not always allowed; plain text always is.
+        downloads.save({
+          filename: response.fileName.replace(/\.docx$/, ".txt"),
+          data: plainTextReport(response)
+        }).catch(function () {
+          if (onStatus) onStatus("This viewer would not save the file. Use the email button instead.");
+        });
+      });
+    });
+    return;
+  }
+
+  anchorSave(blob, response.fileName);
+}
+
+function anchorSave(blob, fileName) {
+  var url = URL.createObjectURL(blob);
+  var link = document.createElement("a");
+  link.href = url;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  setTimeout(function () { URL.revokeObjectURL(url); }, 10000);
+}
+
+function shareReport(response) {
+  var bytes = buildDocx(response);
+  var file;
+  try {
+    file = new File([bytes], response.fileName, {
+      type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    });
+  } catch (error) { return Promise.resolve(false); }
+  if (!navigator.share || !navigator.canShare || !navigator.canShare({ files: [file] })) {
+    return Promise.resolve(false);
+  }
+  return navigator.share({ files: [file], title: "What Will I Do All Day? — my answers" })
+    .then(function () { return true; })
+    .catch(function () { return false; });
+}
+
+/* ---------- Rendering -------------------------------------------- */
+
+var screenEl = document.getElementById("screen");
+var barEl = document.getElementById("bar");
+var backEl = document.getElementById("back");
+var skipEl = document.getElementById("skip");
+var nextEl = document.getElementById("next");
+var fillEl = document.getElementById("fill");
+var counterEl = document.getElementById("counter");
+var partEl = document.getElementById("part-label");
+var savedEl = document.getElementById("saved");
+var overlayEl = document.getElementById("overlay");
+var overlayText = document.getElementById("overlay-text");
+
+var CHECK = '<svg class="tick" viewBox="0 0 20 20" fill="none" stroke="#14181f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 8 14.5 16 6"/></svg>';
+var ICON_CLOCK = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+var ICON_LOCK = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>';
+var ICON_PENCIL = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L20 8l-4-4L4 16v4Z"/></svg>';
+
+function el(tag, className, html) {
+  var node = document.createElement(tag);
+  if (className) node.className = className;
+  if (html !== undefined) node.innerHTML = html;
+  return node;
+}
+
+function setScreen(node) {
+  screenEl.innerHTML = "";
+  node.classList.add("screen");
+  screenEl.appendChild(node);
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
+
+function updateHeader() {
+  var isQuestion = state.phase === "question";
+  var question = QUESTIONS[state.step];
+  partEl.textContent = isQuestion ? PARTS[question.part] : "What Will I Do All Day?";
+  counterEl.textContent = isQuestion ? (state.step + 1) + " / " + QUESTIONS.length : "";
+  var progress = state.phase === "intro" ? 0
+    : state.phase === "question" ? ((state.step + 1) / QUESTIONS.length) * 100 : 100;
+  fillEl.style.width = progress + "%";
+  var count = answeredCount();
+  if (isQuestion && count > 0) {
+    savedEl.textContent = count + " answered — saved on this device";
+    savedEl.classList.remove("hidden");
+  } else {
+    savedEl.classList.add("hidden");
+  }
+  barEl.classList.toggle("hidden", !isQuestion);
+  if (isQuestion) {
+    nextEl.textContent = state.step === QUESTIONS.length - 1 ? "Review" : "Continue";
+    skipEl.classList.toggle("hidden", isAnswered(question));
+    skipEl.style.display = isAnswered(question) ? "none" : "";
+  }
+}
+
+/* --- Intro --- */
+function renderIntro() {
+  var draft = readDraft();
+  var draftCount = 0;
+  if (draft) {
+    var saved = state.answers;
+    state.answers = draft.answers;
+    draftCount = answeredCount();
+    state.answers = saved;
+  }
+
+  var node = el("div");
+  var head = el("div", "title-block");
+  head.appendChild(el("span", "eyebrow", "A survey about life after work"));
+  head.appendChild(el("h1", null, "What Will I Do All Day?"));
+  node.appendChild(head);
+
+  node.appendChild(el("div", "facts",
+    "<span>" + ICON_CLOCK + "About four minutes</span>" +
+    "<span>" + ICON_LOCK + "Anonymous unless you say otherwise</span>"));
+
+  var lede = el("div", "lede");
+  INTRO.forEach(function (text) { lede.appendChild(el("p", null, text)); });
+  node.appendChild(lede);
+
+  var actions = el("div", "stack");
+  actions.style.marginTop = "28px";
+
+  if (draft && draftCount > 0) {
+    var resume = el("button", "btn btn-primary btn-block", "Continue where you left off (" + draftCount + " answered)");
+    resume.addEventListener("click", function () {
+      state.answers = draft.answers;
+      state.startedAt = draft.startedAt || state.startedAt;
+      state.step = Math.min(Math.max(draft.step || 0, 0), QUESTIONS.length - 1);
+      state.phase = "question";
+      render();
+    });
+    actions.appendChild(resume);
+  }
+
+  var start = el("button", (draft && draftCount > 0 ? "btn btn-outline btn-block" : "btn btn-primary btn-block"),
+    draft && draftCount > 0 ? "Start again from question 1" : "Start the survey");
+  start.addEventListener("click", function () {
+    state.answers = {};
+    state.step = 0;
+    state.startedAt = new Date().toISOString();
+    state.phase = "question";
+    clearDraft();
+    render();
+  });
+  actions.appendChild(start);
+  node.appendChild(actions);
+
+  node.appendChild(el("p", "done note", QUESTIONS.length + " questions · skip anything you would rather not answer"));
+  setScreen(node);
+}
+
+/* --- One question --- */
+function renderQuestion() {
+  var question = QUESTIONS[state.step];
+  var node = el("div");
+
+  node.appendChild(el("h2", "q-title",
+    '<span class="q-number">' + (state.step + 1) + ".</span>" + escapeHtml(question.title)));
+  if (question.help) node.appendChild(el("p", "q-help", escapeHtml(question.help)));
+
+  if (question.kind === "single") node.appendChild(renderSingle(question));
+  else if (question.kind === "multi") node.appendChild(renderMulti(question));
+  else if (question.kind === "text") node.appendChild(renderText(question));
+  else if (question.kind === "scale") node.appendChild(renderScale(question));
+  else if (question.kind === "details") node.appendChild(renderDetails(question));
+  else if (question.kind === "contact") node.appendChild(renderContact(question));
+
+  setScreen(node);
+}
+
+function choiceButton(label, selected, multi, onClick) {
+  var button = el("button", "choice",
+    '<span class="marker' + (multi ? " square" : "") + '">' + CHECK + "</span>" +
+    "<span>" + escapeHtml(label) + "</span>");
+  button.type = "button";
+  button.setAttribute("aria-pressed", selected ? "true" : "false");
+  button.addEventListener("click", onClick);
+  return button;
+}
+
+function renderSingle(question) {
+  var wrap = el("div", "choices");
+  var answer = answerOf(question);
+  question.choices.forEach(function (choice) {
+    var selected = answer.id === choice.id;
+    var holder = el("div");
+    holder.appendChild(choiceButton(choice.label, selected, false, function () {
+      state.answers[question.id] = { id: choice.id, otherText: choice.text ? answer.otherText || "" : undefined };
+      saveDraft();
+      if (choice.text) { renderQuestion(); updateHeader(); focusOther(); }
+      else { renderQuestion(); updateHeader(); advanceSoon(); }
+    }));
+    if (choice.text && selected) holder.appendChild(otherInput(question, answer));
+    wrap.appendChild(holder);
+  });
+  return wrap;
+}
+
+function renderMulti(question) {
+  var wrap = el("div", "choices");
+  var answer = answerOf(question);
+  var exclusive = question.exclusive || [];
+  question.choices.forEach(function (choice) {
+    var selected = answer.ids.indexOf(choice.id) !== -1;
+    var holder = el("div");
+    holder.appendChild(choiceButton(choice.label, selected, true, function () {
+      var ids = answer.ids.slice();
+      if (ids.indexOf(choice.id) !== -1) ids = ids.filter(function (id) { return id !== choice.id; });
+      else if (exclusive.indexOf(choice.id) !== -1) ids = [choice.id];
+      else ids = ids.filter(function (id) { return exclusive.indexOf(id) === -1; }).concat([choice.id]);
+      state.answers[question.id] = { ids: ids, otherText: answer.otherText };
+      saveDraft();
+      renderQuestion();
+      updateHeader();
+      if (choice.text && ids.indexOf(choice.id) !== -1) focusOther();
+    }));
+    if (choice.text && selected) holder.appendChild(otherInput(question, answer));
+    wrap.appendChild(holder);
+  });
+  return wrap;
+}
+
+function otherInput(question, answer) {
+  var input = el("input", "other-text");
+  input.type = "text";
+  input.id = "other-input";
+  input.placeholder = "Tell me what it is";
+  input.value = answer.otherText || "";
+  input.addEventListener("input", function () {
+    var current = state.answers[question.id] || answer;
+    current.otherText = input.value;
+    state.answers[question.id] = current;
+    saveDraft();
+  });
+  return input;
+}
+
+function focusOther() {
+  var input = document.getElementById("other-input");
+  if (input) input.focus();
+}
+
+function renderText(question) {
+  var wrap = el("div");
+  var answer = answerOf(question);
+  var box = el("textarea");
+  box.placeholder = question.placeholder || "";
+  box.value = answer.text || "";
+  var count = el("p", "word-count", "");
+
+  function updateCount() {
+    var value = box.value.trim();
+    count.textContent = value ? value.split(/\s+/).length + " words" : "";
+  }
+
+  box.addEventListener("input", function () {
+    state.answers[question.id] = { text: box.value };
+    saveDraft();
+    updateCount();
+    updateHeader();
+  });
+
+  updateCount();
+  wrap.appendChild(box);
+  wrap.appendChild(count);
+  if (window.matchMedia && window.matchMedia("(min-width: 700px)").matches) {
+    setTimeout(function () { box.focus(); }, 30);
+  }
+  return wrap;
+}
+
+function renderScale(question) {
+  var wrap = el("div");
+  var row = el("div", "scale");
+  var answer = answerOf(question);
+  for (var value = question.min; value <= question.max; value++) {
+    (function (current) {
+      var button = el("button", null, String(current));
+      button.type = "button";
+      button.setAttribute("aria-pressed", answer.value === current ? "true" : "false");
+      button.setAttribute("aria-label", current + " out of " + question.max);
+      button.addEventListener("click", function () {
+        state.answers[question.id] = { value: current };
+        saveDraft();
+        renderQuestion();
+        updateHeader();
+        advanceSoon();
+      });
+      row.appendChild(button);
+    })(value);
+  }
+  wrap.appendChild(row);
+  wrap.appendChild(el("div", "scale-labels",
+    "<span>" + escapeHtml(question.minLabel) + "</span><span>" + escapeHtml(question.maxLabel) + "</span>"));
+  return wrap;
+}
+
+function textField(labelText, value, placeholder, mode, onInput) {
+  var field = el("label", "field");
+  field.appendChild(el("span", "field-label", escapeHtml(labelText)));
+  var input = el("input");
+  input.type = "text";
+  if (mode) input.inputMode = mode;
+  input.placeholder = placeholder;
+  input.value = value || "";
+  input.addEventListener("input", function () { onInput(input.value); });
+  field.appendChild(input);
+  return field;
+}
+
+function renderDetails(question) {
+  var answer = answerOf(question);
+  state.answers[question.id] = answer;
+  var wrap = el("div", "fields");
+
+  function update() { saveDraft(); updateHeader(); }
+
+  var pair = el("div", "two-up");
+  pair.appendChild(textField("Age", answer.age, "e.g. 62", "numeric", function (value) { answer.age = value; update(); }));
+  pair.appendChild(textField("Years in your main career", answer.years, "e.g. 30", "numeric", function (value) { answer.years = value; update(); }));
+  wrap.appendChild(pair);
+
+  var partnerBlock = el("div", "field");
+  partnerBlock.appendChild(el("span", "field-label", "Do you live with a partner?"));
+  var partnerRow = el("div", "two-up");
+  ["yes", "no"].forEach(function (option) {
+    var button = el("button", "choice", '<span style="text-transform:capitalize">' + option + "</span>");
+    button.type = "button";
+    button.style.justifyContent = "center";
+    button.setAttribute("aria-pressed", answer.partner === option ? "true" : "false");
+    button.addEventListener("click", function () {
+      answer.partner = answer.partner === option ? "" : option;
+      update();
+      renderQuestion();
+      updateHeader();
+    });
+    partnerRow.appendChild(button);
+  });
+  partnerBlock.appendChild(partnerRow);
+  wrap.appendChild(partnerBlock);
+
+  wrap.appendChild(textField("State or region", answer.region, "e.g. Ohio, or Lombardy", null, function (value) { answer.region = value; update(); }));
+  return wrap;
+}
+
+function renderContact(question) {
+  var answer = answerOf(question);
+  state.answers[question.id] = answer;
+  var wrap = el("div", "fields");
+
+  var field = el("label", "field");
+  field.appendChild(el("span", "field-label", "Email"));
+  var input = el("input");
+  input.type = "email";
+  input.inputMode = "email";
+  input.autocapitalize = "none";
+  input.spellcheck = false;
+  input.placeholder = "you@example.com";
+  input.value = answer.email || "";
+  input.addEventListener("input", function () {
+    answer.email = input.value;
+    saveDraft();
+    updateHeader();
+  });
+  field.appendChild(input);
+  wrap.appendChild(field);
+
+  var consent = choiceButton(question.consent, !!answer.consent, true, function () {
+    answer.consent = !answer.consent;
+    saveDraft();
+    renderQuestion();
+    updateHeader();
+  });
+  wrap.appendChild(consent);
+
+  wrap.appendChild(el("p", "q-help", "Leave this blank to stay completely anonymous. Your answers still count."));
+  return wrap;
+}
+
+/* --- Review --- */
+function renderReview() {
+  var node = el("div");
+  node.appendChild(el("h2", "q-title", "One last look"));
+  node.appendChild(el("p", "q-help", "Tap any answer to change it. Nothing is sent until you press the button at the bottom."));
+
+  PARTS.forEach(function (partName, partIndex) {
+    var group = el("div", "part-group");
+    group.appendChild(el("h3", null, escapeHtml(partName)));
+    var list = el("ul", "answer-list");
+    QUESTIONS.forEach(function (question, index) {
+      if (question.part !== partIndex) return;
+      var answered = isAnswered(question);
+      var item = el("li");
+      var row = el("button", "answer-row",
+        "<span style='flex:1'>" +
+        '<span class="answer-q">' + (index + 1) + ". " + escapeHtml(question.title) + "</span>" +
+        '<span class="answer-a' + (answered ? "" : " skipped") + '">' +
+        escapeHtml(answered ? formatAnswer(question) : "Skipped") + "</span></span>" + ICON_PENCIL);
+      row.type = "button";
+      row.addEventListener("click", function () {
+        state.step = index;
+        state.phase = "question";
+        render();
+      });
+      item.appendChild(row);
+      list.appendChild(item);
+    });
+    group.appendChild(list);
+    node.appendChild(group);
+  });
+
+  var send = el("button", "btn btn-primary btn-block", "Send my answers");
+  send.addEventListener("click", submit);
+  node.appendChild(send);
+  setScreen(node);
+}
+
+/* --- Finished --- */
+function renderDone() {
+  var response = state.response;
+  var node = el("div", "done");
+
+  node.appendChild(el("div", "seal",
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8 12.5 2.5 2.5L16 9"/></svg>'));
+
+  if (state.sent) {
+    node.appendChild(el("h2", null, "Thank you — that is the whole survey."));
+    node.appendChild(el("p", null, "Your answers are on their way to " + escapeHtml(CONFIG.authorName) + " as a Word report."));
+  } else {
+    node.appendChild(el("h2", null, "One last step."));
+    node.appendChild(el("p", null,
+      "Your answers are ready. Tap below — it opens your email app with everything already written. All you do is press send."));
+  }
+
+  var status = el("p", "status", "");
+  var actions = el("div", "stack");
+  actions.style.marginTop = "8px";
+
+  if (!state.sent) {
+    var email = el("a", "btn btn-primary btn-block", "Email my answers to " + escapeHtml(CONFIG.authorName));
+    email.href = mailtoLink(response);
+    email.addEventListener("click", function () {
+      status.textContent = "If your email app did not open, use Copy my answers below.";
+    });
+    actions.appendChild(email);
+  }
+
+  var download = el("button", "btn btn-outline btn-block", "Download my answers (Word)");
+  download.addEventListener("click", function () {
+    saveReport(response, function (message) { status.textContent = message; });
+  });
+  actions.appendChild(download);
+
+  if (navigator.share) {
+    var share = el("button", "btn btn-outline btn-block", "Share my answers");
+    share.addEventListener("click", function () {
+      shareReport(response).then(function (shared) {
+        if (!shared) saveReport(response, function (message) { status.textContent = message; });
+      });
+    });
+    actions.appendChild(share);
+  }
+
+  if (!state.sent && navigator.clipboard) {
+    var copy = el("button", "btn btn-quiet btn-block", "Copy my answers");
+    copy.addEventListener("click", function () {
+      navigator.clipboard.writeText(plainTextReport(response)).then(function () {
+        status.textContent = "Copied. Paste them into an email to " + CONFIG.authorEmail;
+      }, function () {
+        status.textContent = "Copying is blocked here — use the download instead.";
+      });
+    });
+    actions.appendChild(copy);
+  }
+
+  node.appendChild(actions);
+  node.appendChild(status);
+  node.appendChild(el("p", "note", CLOSING));
+  node.appendChild(el("p", "ref", "Reference " + escapeHtml(response.responseId)));
+  setScreen(node);
+}
+
+function escapeHtml(text) {
+  return String(text).replace(/[&<>"']/g, function (character) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[character];
+  });
+}
+
+/* ---------- Flow -------------------------------------------------- */
+
+var advanceTimer = null;
+
+function advanceSoon() {
+  clearTimeout(advanceTimer);
+  advanceTimer = setTimeout(goNext, 260);
+}
+
+function goNext() {
+  clearTimeout(advanceTimer);
+  if (state.step >= QUESTIONS.length - 1) { state.phase = "review"; render(); return; }
+  state.step += 1;
+  saveDraft();
+  render();
+}
+
+function goBack() {
+  clearTimeout(advanceTimer);
+  if (state.step === 0) { state.phase = "intro"; render(); return; }
+  state.step -= 1;
+  saveDraft();
+  render();
+}
+
+function submit() {
+  overlayText.textContent = "Building your report…";
+  overlayEl.classList.remove("hidden");
+  var response = buildResponse();
+  state.response = response;
+
+  setTimeout(function () {
+    var docx = buildDocx(response);
+    postReport(response, docx).then(function (delivered) {
+      state.sent = delivered;
+      state.phase = "done";
+      clearDraft();
+      overlayEl.classList.add("hidden");
+      render();
+    });
+  }, 30);
+}
+
+function render() {
+  if (state.phase === "intro") renderIntro();
+  else if (state.phase === "question") renderQuestion();
+  else if (state.phase === "review") renderReview();
+  else renderDone();
+  updateHeader();
+}
+
+backEl.addEventListener("click", goBack);
+skipEl.addEventListener("click", goNext);
+nextEl.addEventListener("click", goNext);
+
+render();
+</script>
+</body>
+</html>
