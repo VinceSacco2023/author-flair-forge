@@ -1,0 +1,440 @@
+/* Pualanii Village Domes — shop page
+   Mobile-first. All colors, spacing and type sizes come from the tokens below. */
+
+:root {
+  /* Palette — earthy base, one accent used only for buttons */
+  --color-forest: #2f4a3a;
+  --color-wood: #7a563a;
+  --color-bg: #f6f0e4;          /* cream */
+  --color-bg-alt: #ece4d4;      /* sand, alternating sections */
+  --color-surface: #fffaf1;
+  --color-text: #1f2a23;
+  --color-muted: #4a5a4f;
+  --color-heading: #2f4a3a;
+  --color-link: #2f4a3a;
+  --color-border: #d6cbb5;
+  --color-error: #a01818;
+  --color-success: #2f4a3a;
+  --color-focus: #1f2a23;
+  --color-accent: #a3441c;
+  --color-accent-hover: #863614;
+  --color-on-accent: #ffffff;
+  --color-header-bg: rgb(246 240 228 / 0.95);
+
+  /* Spacing scale: 4 / 8 / 16 / 24 / 32 / 48 / 64 / 96 */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 16px;
+  --s-4: 24px;
+  --s-5: 32px;
+  --s-6: 48px;
+  --s-7: 64px;
+  --s-8: 96px;
+
+  /* Type */
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-heading: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --text-base: 1.0625rem;       /* 17px */
+  --text-small: 1rem;           /* 16px — nothing smaller is used */
+  --text-h1: clamp(2.5rem, 1.6rem + 4.5vw, 4.5rem);
+  --text-h2: clamp(1.75rem, 1.35rem + 2vw, 2.75rem);
+  --text-h3: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);
+
+  --radius: 8px;
+  --max-width: 1200px;
+  --header-height: 64px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-forest: #9cc4a8;
+    --color-wood: #c99a72;
+    --color-bg: #141c17;
+    --color-bg-alt: #1a241e;
+    --color-surface: #212d25;
+    --color-text: #efe8da;
+    --color-muted: #c2bba9;
+    --color-heading: #cfe3d5;
+    --color-link: #9cc4a8;
+    --color-border: #3a4a3f;
+    --color-error: #ff9b8f;
+    --color-success: #9cc4a8;
+    --color-focus: #efe8da;
+    --color-accent: #e58a57;
+    --color-accent-hover: #f0a37a;
+    --color-on-accent: #141c17;
+    --color-header-bg: rgb(20 28 23 / 0.95);
+  }
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  overflow-wrap: break-word;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  line-height: 1.15;
+  margin: 0 0 var(--s-3);
+  color: var(--color-heading);
+}
+h1 { font-size: var(--text-h1); }
+h2 { font-size: var(--text-h2); }
+h3 { font-size: var(--text-h3); }
+
+p { margin: 0 0 var(--s-3); }
+
+a { color: var(--color-link); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+/* Anchored sections land below the sticky header */
+[id] { scroll-margin-top: var(--s-8); }
+
+ul { margin: 0; padding: 0; list-style: none; }
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--s-3);
+}
+.container--narrow { max-width: 720px; }
+
+/* ---------- Skip link ---------- */
+.skip-link {
+  position: absolute;
+  left: var(--s-3);
+  top: calc(-1 * var(--s-8));
+  z-index: 100;
+  padding: var(--s-2) var(--s-3);
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-radius: var(--radius);
+}
+.skip-link:focus { top: var(--s-2); }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--color-header-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  min-height: var(--header-height);
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--text-base);
+  color: var(--color-heading);
+  text-decoration: none;
+  line-height: 1.2;
+}
+.nav-list {
+  display: flex;
+  gap: var(--s-1);
+}
+.nav-list a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding-inline: var(--s-2);
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: var(--text-small);
+}
+.nav-list a:hover { text-decoration: underline; }
+
+/* ---------- Button (the single primary style) ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  min-width: 44px;
+  padding: var(--s-2) var(--s-4);
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+.btn:hover {
+  background: var(--color-accent-hover);
+  transform: translateY(-1px);
+}
+.btn:active { transform: translateY(0); }
+.btn:focus-visible { outline-offset: 3px; }
+
+/* ---------- Hero ---------- */
+.hero {
+  padding-block: var(--s-8) var(--s-7);
+}
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  /* Keeps white text readable over any photo */
+  background: linear-gradient(to top, rgb(16 24 19 / 0.9) 0%, rgb(16 24 19 / 0.72) 65%, rgb(16 24 19 / 0.3) 100%);
+}
+.hero__content {
+  position: relative;
+  max-width: var(--max-width);
+}
+.hero h1 { color: #ffffff; }
+.eyebrow {
+  font-size: var(--text-small);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: var(--s-2);
+}
+.hero__sub {
+  max-width: 40ch;
+  font-size: clamp(1.0625rem, 1rem + 0.5vw, 1.25rem);
+  margin-bottom: var(--s-4);
+}
+/* Focus ring must show on the dark hero */
+.hero :focus-visible { outline-color: #ffffff; }
+
+/* ---------- Sections ---------- */
+.section { padding-block: var(--s-7); }
+.section--alt { background: var(--color-bg-alt); }
+.section__lead {
+  color: var(--color-muted);
+  margin-bottom: var(--s-5);
+}
+
+/* ---------- Story ---------- */
+.story {
+  display: grid;
+  gap: var(--s-5);
+  align-items: center;
+}
+.story__img { border-radius: var(--radius); width: 100%; }
+
+/* ---------- Products ---------- */
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-4);
+}
+.product-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--s-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+.product-card img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--radius);
+  margin-bottom: var(--s-3);
+}
+.product-card h3 { margin-bottom: var(--s-2); }
+.price {
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--s-3);
+}
+.price--hidden {
+  font-weight: 400;
+  color: var(--color-muted);
+}
+.product-card .btn { margin-top: auto; align-self: flex-start; }
+
+.see-all {
+  margin-top: var(--s-5);
+  margin-bottom: 0;
+  text-align: center;
+}
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 700;
+}
+.link-arrow::after { content: " →"; white-space: pre; }
+
+/* ---------- Why it matters ---------- */
+.why-grid {
+  display: grid;
+  gap: var(--s-5);
+}
+.why-icon {
+  width: var(--s-6);
+  height: var(--s-6);
+  color: var(--color-wood);
+  margin-bottom: var(--s-3);
+}
+.why-item p { color: var(--color-muted); margin-bottom: 0; }
+
+/* ---------- Progress strip ---------- */
+.progress-strip {
+  display: grid;
+  gap: var(--s-4);
+}
+.progress-strip figure { margin: 0; }
+.progress-strip img {
+  width: 100%;
+  border-radius: var(--radius);
+  margin-bottom: var(--s-2);
+}
+.progress-strip figcaption {
+  font-size: var(--text-small);
+  font-weight: 700;
+  color: var(--color-muted);
+}
+
+/* ---------- Waitlist ---------- */
+.waitlist__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-4);
+}
+.waitlist__actions a:not(.btn) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.waitlist__note {
+  margin: var(--s-3) 0 0;
+  font-size: var(--text-small);
+  color: var(--color-muted);
+}
+
+/* ---------- FAQ ---------- */
+.faq details {
+  border-bottom: 1px solid var(--color-border);
+}
+.faq details:first-child { border-top: 1px solid var(--color-border); }
+.faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  min-height: 48px;
+  padding-block: var(--s-3);
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+";
+  font-size: var(--text-h3);
+  line-height: 1;
+  color: var(--color-wood);
+}
+.faq details[open] summary::after { content: "−"; }
+.faq details p { padding-bottom: var(--s-3); margin: 0; }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background: var(--color-forest);
+  color: var(--color-bg);
+  padding-block: var(--s-6) var(--s-4);
+}
+.site-footer a { color: inherit; }
+.site-footer :focus-visible { outline-color: var(--color-bg); }
+.footer-grid {
+  display: grid;
+  gap: var(--s-4);
+  margin-bottom: var(--s-4);
+}
+.brand--footer { display: block; min-height: 0; color: inherit; margin-bottom: var(--s-1); }
+.footer-links li { margin-bottom: var(--s-1); }
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.copyright { font-size: var(--text-small); margin: 0; }
+
+@media (prefers-color-scheme: dark) {
+  /* Light forest text on a dark footer */
+  .site-footer { background: #0f1612; color: var(--color-text); }
+  .site-footer :focus-visible { outline-color: var(--color-text); }
+}
+
+/* ---------- Privacy page ---------- */
+.legal { padding-block: var(--s-6) var(--s-7); }
+.legal h2 { margin-top: var(--s-5); }
+.legal ul { list-style: disc; padding-left: var(--s-4); margin-bottom: var(--s-3); }
+
+/* ---------- Breakpoints (mobile-first) ---------- */
+@media (min-width: 600px) {
+  .product-grid { grid-template-columns: repeat(2, 1fr); }
+  .progress-strip { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 768px) {
+  .container { padding-inline: var(--s-5); }
+  .story { grid-template-columns: 1fr 1fr; gap: var(--s-6); }
+  .why-grid { grid-template-columns: repeat(3, 1fr); }
+  .footer-grid { grid-template-columns: 1fr auto; align-items: start; }
+  .section { padding-block: var(--s-8); }
+  .brand { font-size: 1.25rem; }
+}
+
+@media (min-width: 1024px) {
+  .product-grid { grid-template-columns: repeat(3, 1fr); }
+  .progress-strip { grid-template-columns: repeat(4, 1fr); }
+  .hero { min-height: 80vh; }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .btn:hover { transform: none; }
+}
