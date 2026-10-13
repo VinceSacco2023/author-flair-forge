@@ -1,0 +1,1336 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pualanii Village Domes</title>
+    <meta
+      name="description"
+      content="Pualanii Village Domes — a self-sufficient eco-retreat in Floyd, Virginia, combining geodesic domes with aeroponic farming."
+    />
+    <meta property="og:title" content="Pualanii Village Domes" />
+    <meta
+      property="og:description"
+      content="A self-sufficient eco-retreat aeroponic community in Floyd, Virginia."
+    />
+    <meta name="theme-color" content="#1f3b2d" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <!--
+  Content source: the draft site www.pualaniivillagedomes.com (home page and the
+  "Self-sufficient Geodesic Domes" service page), as indexed by search on 2026-10-13.
+  Only facts stated there are used. Items marked TODO need the owner's input.
+-->
+    <style>
+      :root {
+        --bg: #f7f3ea;
+        --surface: #fffdf8;
+        --surface-2: #efe8d8;
+        --ink: #1d2a22;
+        --ink-soft: #4a5a4f;
+        --forest: #1f3b2d;
+        --leaf: #3f7a52;
+        --sun: #e8a33d;
+        --sky: #cfe3e6;
+        --line: #ddd3bf;
+        --hill-1: #9cbf8f;
+        --hill-2: #6f9c6a;
+        --hill-3: #3f6e4c;
+        --dome: #fffdf8;
+        --dome-line: #1f3b2d;
+        --shadow: 0 10px 30px rgba(31, 59, 45, 0.1);
+        --radius: 20px;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #121a15;
+          --surface: #1a241e;
+          --surface-2: #223029;
+          --ink: #eef2ea;
+          --ink-soft: #b3c2b6;
+          --forest: #9fd3ae;
+          --leaf: #7cc191;
+          --sun: #f0b65a;
+          --sky: #1d2d33;
+          --line: #2f3f36;
+          --hill-1: #2e4a36;
+          --hill-2: #26402e;
+          --hill-3: #1c3224;
+          --dome: #e9efe6;
+          --dome-line: #1a241e;
+          --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+      }
+      :root[data-theme="dark"] {
+        --bg: #121a15;
+        --surface: #1a241e;
+        --surface-2: #223029;
+        --ink: #eef2ea;
+        --ink-soft: #b3c2b6;
+        --forest: #9fd3ae;
+        --leaf: #7cc191;
+        --sun: #f0b65a;
+        --sky: #1d2d33;
+        --line: #2f3f36;
+        --hill-1: #2e4a36;
+        --hill-2: #26402e;
+        --hill-3: #1c3224;
+        --dome: #e9efe6;
+        --dome-line: #1a241e;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font:
+          400 17px/1.65 Inter,
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: Fraunces, Georgia, serif;
+        line-height: 1.15;
+        margin: 0 0 0.5em;
+        color: var(--ink);
+      }
+      h1 {
+        font-size: clamp(2.4rem, 7vw, 4.6rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+      h2 {
+        font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+      h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+      p {
+        margin: 0 0 1em;
+        color: var(--ink-soft);
+      }
+      a {
+        color: var(--leaf);
+      }
+      :focus-visible {
+        outline: 3px solid var(--sun);
+        outline-offset: 3px;
+        border-radius: 6px;
+      }
+      .wrap {
+        width: min(1120px, 100% - 32px);
+        margin-inline: auto;
+      }
+      .eyebrow {
+        display: inline-block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--leaf);
+        margin-bottom: 0.9rem;
+      }
+      section {
+        padding: clamp(64px, 10vw, 120px) 0;
+      }
+
+      /* Nav */
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        backdrop-filter: blur(10px);
+        background: color-mix(in srgb, var(--bg) 82%, transparent);
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s;
+      }
+      .nav.scrolled {
+        border-bottom-color: var(--line);
+      }
+      .nav .wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 68px;
+        gap: 16px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: var(--ink);
+        font-family: Fraunces, Georgia, serif;
+        font-weight: 700;
+        font-size: 1.15rem;
+      }
+      .brand svg {
+        width: 34px;
+        height: 34px;
+        flex: none;
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 26px;
+      }
+      .nav-links a {
+        color: var(--ink-soft);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+      .nav-links a:hover {
+        color: var(--ink);
+      }
+      .theme-btn {
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--ink);
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        font-size: 1rem;
+      }
+      .menu-btn {
+        display: none;
+      }
+      @media (max-width: 760px) {
+        .nav-links {
+          position: fixed;
+          inset: 68px 0 auto 0;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0;
+          background: var(--surface);
+          border-bottom: 1px solid var(--line);
+          padding: 8px 16px 16px;
+          transform: translateY(-120%);
+          transition: transform 0.25s ease;
+        }
+        .nav-links.open {
+          transform: none;
+        }
+        .nav-links a {
+          padding: 14px 4px;
+          border-bottom: 1px solid var(--line);
+        }
+        .nav-links .btn {
+          margin-top: 12px;
+          text-align: center;
+        }
+        .menu-btn {
+          display: grid;
+        }
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 14px 24px;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 1rem;
+        text-decoration: none;
+        border: 2px solid transparent;
+        cursor: pointer;
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease,
+          background 0.15s;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+      .btn-primary {
+        background: var(--forest);
+        color: var(--bg);
+        box-shadow: var(--shadow);
+      }
+      .btn-ghost {
+        background: transparent;
+        color: var(--ink);
+        border-color: var(--line);
+      }
+      .btn-ghost:hover {
+        border-color: var(--leaf);
+      }
+      .nav-links .btn {
+        padding: 10px 18px;
+        font-size: 0.92rem;
+        color: var(--bg);
+      }
+
+      /* Hero */
+      .hero {
+        padding: clamp(32px, 6vw, 72px) 0 0;
+        position: relative;
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.05fr 1fr;
+        gap: 40px;
+        align-items: center;
+      }
+      .hero p.lead {
+        font-size: clamp(1.08rem, 2.2vw, 1.3rem);
+        max-width: 34ch;
+      }
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 28px 0 22px;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .chips li {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 6px 14px;
+        font-size: 0.88rem;
+        color: var(--ink-soft);
+      }
+      .scene {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 28px;
+        background: var(--sky);
+        box-shadow: var(--shadow);
+      }
+      .scene .sun {
+        animation: glow 6s ease-in-out infinite;
+        transform-origin: 470px 90px;
+      }
+      .scene .blade {
+        animation: spin 5s linear infinite;
+        transform-origin: 98px 140px;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes glow {
+        50% {
+          transform: scale(1.06);
+        }
+      }
+      @media (max-width: 860px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero p.lead {
+          max-width: none;
+        }
+      }
+
+      /* Intro band */
+      .band {
+        margin-top: clamp(48px, 8vw, 90px);
+        background: var(--forest);
+        color: var(--bg);
+        border-radius: var(--radius);
+        padding: clamp(28px, 5vw, 48px);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .band div {
+        border-left: 2px solid color-mix(in srgb, var(--bg) 30%, transparent);
+        padding-left: 18px;
+      }
+      .band strong {
+        display: block;
+        font-family: Fraunces, Georgia, serif;
+        font-size: 1.35rem;
+        color: var(--bg);
+      }
+      .band span {
+        color: color-mix(in srgb, var(--bg) 78%, transparent);
+        font-size: 0.95rem;
+      }
+      @media (max-width: 760px) {
+        .band {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Two column */
+      .split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(32px, 6vw, 72px);
+        align-items: center;
+      }
+      @media (max-width: 860px) {
+        .split {
+          grid-template-columns: 1fr;
+        }
+      }
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 28px;
+        box-shadow: var(--shadow);
+      }
+
+      /* Systems */
+      .systems-head {
+        max-width: 640px;
+        margin-bottom: 40px;
+      }
+      .systems {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 28px;
+      }
+      .sys-tabs {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .sys-tab {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        text-align: left;
+        width: 100%;
+        padding: 16px 18px;
+        border-radius: 16px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--ink);
+        font:
+          600 1rem Inter,
+          sans-serif;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          border-color 0.15s;
+      }
+      .sys-tab .ico {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: var(--surface-2);
+        font-size: 1.25rem;
+        flex: none;
+      }
+      .sys-tab[aria-selected="true"] {
+        border-color: var(--leaf);
+        background: color-mix(in srgb, var(--leaf) 12%, var(--surface));
+      }
+      .sys-panel {
+        padding: clamp(24px, 4vw, 40px);
+      }
+      .sys-panel .big-ico {
+        font-size: 2.6rem;
+        margin-bottom: 10px;
+      }
+      .sys-panel .tag {
+        display: inline-block;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--leaf);
+        background: color-mix(in srgb, var(--leaf) 12%, transparent);
+        padding: 4px 10px;
+        border-radius: 999px;
+        margin-bottom: 14px;
+      }
+      .sys-panel .note {
+        font-size: 0.88rem;
+        border-top: 1px dashed var(--line);
+        padding-top: 14px;
+        margin-top: 18px;
+        margin-bottom: 0;
+      }
+      @media (max-width: 860px) {
+        .systems {
+          grid-template-columns: 1fr;
+        }
+        .sys-tabs {
+          flex-direction: row;
+          overflow-x: auto;
+          padding-bottom: 6px;
+          scroll-snap-type: x mandatory;
+        }
+        .sys-tab {
+          width: auto;
+          flex: none;
+          scroll-snap-align: start;
+          padding: 12px 14px;
+          font-size: 0.92rem;
+        }
+      }
+
+      /* Farm */
+      .farm-art {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      .ticks {
+        list-style: none;
+        padding: 0;
+        margin: 18px 0 0;
+        display: grid;
+        gap: 10px;
+      }
+      .ticks li {
+        display: flex;
+        gap: 12px;
+        color: var(--ink-soft);
+      }
+      .ticks li::before {
+        content: "";
+        flex: none;
+        width: 22px;
+        height: 22px;
+        margin-top: 3px;
+        border-radius: 50%;
+        background: var(--leaf)
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E")
+          center/14px no-repeat;
+      }
+
+      /* Booking */
+      .book {
+        background: var(--surface-2);
+      }
+      .book-card {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        overflow: hidden;
+        padding: 0;
+      }
+      .book-card .art {
+        background: var(--forest);
+        display: grid;
+        place-items: center;
+        padding: 32px;
+      }
+      .book-card .art svg {
+        width: min(280px, 100%);
+        height: auto;
+      }
+      .book-card .body {
+        padding: clamp(28px, 5vw, 48px);
+      }
+      .price {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        margin: 8px 0 18px;
+      }
+      .price strong {
+        font-family: Fraunces, Georgia, serif;
+        font-size: 3rem;
+        color: var(--ink);
+        line-height: 1;
+      }
+      .price span {
+        color: var(--ink-soft);
+        font-size: 0.95rem;
+      }
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 18px;
+        margin-bottom: 24px;
+        color: var(--ink-soft);
+        font-size: 0.95rem;
+      }
+      @media (max-width: 760px) {
+        .book-card {
+          grid-template-columns: 1fr;
+        }
+        .book-card .art {
+          padding: 28px 32px 0;
+        }
+      }
+
+      /* FAQ */
+      .faq {
+        max-width: 760px;
+      }
+      details {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 4px 22px;
+        margin-bottom: 12px;
+      }
+      summary {
+        cursor: pointer;
+        list-style: none;
+        padding: 16px 0;
+        font-weight: 600;
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      summary::-webkit-details-marker {
+        display: none;
+      }
+      summary::after {
+        content: "+";
+        font-size: 1.4rem;
+        line-height: 1;
+        color: var(--leaf);
+        transition: transform 0.2s;
+      }
+      details[open] summary::after {
+        transform: rotate(45deg);
+      }
+      details p {
+        padding-bottom: 8px;
+      }
+
+      /* Footer */
+      footer {
+        background: var(--forest);
+        color: color-mix(in srgb, var(--bg) 80%, transparent);
+        padding: 56px 0 36px;
+      }
+      footer .wrap {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 24px;
+        align-items: flex-start;
+      }
+      footer .brand {
+        color: var(--bg);
+      }
+      footer a {
+        color: var(--bg);
+      }
+      footer small {
+        display: block;
+        width: 100%;
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid color-mix(in srgb, var(--bg) 18%, transparent);
+        font-size: 0.85rem;
+      }
+
+      /* Reveal */
+      .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .reveal {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .no-js .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    </style>
+  </head>
+  <body class="no-js">
+    <a
+      href="#main"
+      style="position: absolute; left: -999px"
+      onfocus="
+        this.style.left = '16px';
+        this.style.top = '16px';
+        this.style.zIndex = 99;
+      "
+      onblur="this.style.left = '-999px'"
+      >Skip to content</a
+    >
+
+    <header class="nav" id="nav">
+      <div class="wrap">
+        <a class="brand" href="#top" aria-label="Pualanii Village Domes home">
+          <svg viewBox="0 0 40 40" aria-hidden="true">
+            <circle cx="20" cy="20" r="19" fill="var(--forest)" />
+            <path d="M8 28a12 12 0 0 1 24 0Z" fill="var(--dome)" />
+            <path
+              d="M8 28 14 19l6 9 6-9 6 9M14 19l6-5 6 5M20 14v14"
+              fill="none"
+              stroke="var(--forest)"
+              stroke-width="1.4"
+              stroke-linejoin="round"
+            />
+            <circle cx="29" cy="11" r="3" fill="var(--sun)" />
+          </svg>
+          Pualanii Village Domes
+        </a>
+        <nav class="nav-links" id="navLinks" aria-label="Primary">
+          <a href="#village">The village</a>
+          <a href="#systems">Off-grid systems</a>
+          <a href="#farm">Aeroponics</a>
+          <a href="#faq">FAQ</a>
+          <a class="btn btn-primary" href="#book">Book a dome</a>
+        </nav>
+        <div style="display: flex; gap: 8px">
+          <button
+            class="theme-btn"
+            id="themeBtn"
+            type="button"
+            aria-label="Switch colour theme"
+          >
+            ◐
+          </button>
+          <button
+            class="theme-btn menu-btn"
+            id="menuBtn"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="navLinks"
+          >
+            ☰
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- HERO -->
+      <section class="hero" id="top">
+        <div class="wrap">
+          <div class="hero-grid">
+            <div class="reveal">
+              <span class="eyebrow">Floyd, Virginia</span>
+              <h1>Sleep under a dome. Live off the land.</h1>
+              <p class="lead">
+                Pualanii Village Domes is a self-sufficient eco-retreat that
+                pairs geodesic domes with aeroponic farming. It runs on sun,
+                wind and water.
+              </p>
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="#book">Book your stay →</a>
+                <a class="btn btn-ghost" href="#systems">See how it works</a>
+              </div>
+              <ul class="chips" aria-label="Highlights">
+                <li>☀️ Solar power</li>
+                <li>🌬️ Wind power</li>
+                <li>💧 Water from air &amp; rain</li>
+                <li>🌱 Aeroponic farming</li>
+              </ul>
+            </div>
+
+            <svg
+              class="scene reveal"
+              viewBox="0 0 560 420"
+              role="img"
+              aria-labelledby="sceneTitle"
+            >
+              <title id="sceneTitle">
+                Illustration of geodesic domes among green hills, with a wind
+                turbine, solar panels and the sun
+              </title>
+              <circle class="sun" cx="470" cy="90" r="42" fill="var(--sun)" />
+              <path
+                d="M0 250 Q120 170 240 220 T560 190 V420 H0Z"
+                fill="var(--hill-1)"
+              />
+              <path
+                d="M0 300 Q160 240 300 285 T560 260 V420 H0Z"
+                fill="var(--hill-2)"
+              />
+              <!-- wind turbine -->
+              <line
+                x1="98"
+                y1="140"
+                x2="98"
+                y2="285"
+                stroke="var(--dome)"
+                stroke-width="5"
+                stroke-linecap="round"
+              />
+              <g class="blade" fill="var(--dome)">
+                <path d="M98 140 L94 84 Q98 78 102 84Z" />
+                <path
+                  d="M98 140 L94 84 Q98 78 102 84Z"
+                  transform="rotate(120 98 140)"
+                />
+                <path
+                  d="M98 140 L94 84 Q98 78 102 84Z"
+                  transform="rotate(240 98 140)"
+                />
+              </g>
+              <circle cx="98" cy="140" r="6" fill="var(--forest)" />
+              <!-- big dome -->
+              <g
+                stroke="var(--dome-line)"
+                stroke-width="2"
+                stroke-linejoin="round"
+              >
+                <path d="M200 330 A110 110 0 0 1 420 330Z" fill="var(--dome)" />
+                <path
+                  d="M200 330 L236 262 L276 330 L310 250 L344 330 L384 262 L420 330 M236 262 L272 232 L310 250 L348 232 L384 262 M272 232 L310 220 L348 232 M276 330 L310 250 M236 262 L276 330"
+                  fill="none"
+                />
+                <path
+                  d="M296 330 v-34 a14 14 0 0 1 28 0 v34"
+                  fill="var(--sun)"
+                />
+              </g>
+              <!-- small dome -->
+              <g
+                stroke="var(--dome-line)"
+                stroke-width="2"
+                stroke-linejoin="round"
+              >
+                <path d="M430 338 A58 58 0 0 1 546 338Z" fill="var(--dome)" />
+                <path
+                  d="M430 338 L452 302 L474 338 L488 290 L502 338 L524 302 L546 338 M452 302 L488 290 L524 302"
+                  fill="none"
+                />
+              </g>
+              <!-- solar panels -->
+              <g fill="var(--forest)" stroke="var(--dome)" stroke-width="1.5">
+                <path d="M120 350 l40 -18 h44 l-40 18Z" />
+                <path d="M60 360 l40 -18 h44 l-40 18Z" />
+              </g>
+              <path
+                d="M0 360 Q200 330 360 352 T560 345 V420 H0Z"
+                fill="var(--hill-3)"
+              />
+              <!-- aeroponic towers -->
+              <g fill="var(--leaf)">
+                <rect x="452" y="360" width="8" height="40" rx="4" />
+                <circle cx="448" cy="368" r="5" />
+                <circle cx="464" cy="378" r="5" />
+                <circle cx="448" cy="390" r="5" />
+                <rect x="490" y="356" width="8" height="44" rx="4" />
+                <circle cx="486" cy="364" r="5" />
+                <circle cx="502" cy="374" r="5" />
+                <circle cx="486" cy="388" r="5" />
+              </g>
+            </svg>
+          </div>
+
+          <div class="band reveal" id="village">
+            <div>
+              <strong>Geodesic domes</strong
+              ><span>Modern interiors and everyday comforts inside.</span>
+            </div>
+            <div>
+              <strong>Self-sufficient</strong
+              ><span>Solar panels and wind turbines make the power.</span>
+            </div>
+            <div>
+              <strong>Aeroponic community</strong
+              ><span>Food grown in the air, with no soil.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- THE IDEA -->
+      <section>
+        <div class="wrap split">
+          <div class="reveal">
+            <span class="eyebrow">The idea</span>
+            <h2>A retreat that takes care of itself, and of you.</h2>
+            <p>
+              Pualanii Village Domes is a
+              <strong
+                >self-sufficient eco-retreat and aeroponic community</strong
+              >
+              in Floyd, Virginia. It brings together geodesic dome architecture
+              and modern aeroponic growing.
+            </p>
+            <p>
+              The domes make their own power from solar panels and wind
+              turbines. Inside, each one has modern interiors and conveniences,
+              so an off-grid stay still feels comfortable.
+            </p>
+            <a class="btn btn-ghost" href="#systems" style="margin-top: 8px"
+              >Explore the systems</a
+            >
+          </div>
+          <div class="card reveal" aria-label="What's at the village">
+            <h3 style="margin-bottom: 14px">At the village</h3>
+            <ul class="ticks">
+              <li>Geodesic domes with modern interiors and conveniences</li>
+              <li>Solar panels and wind turbines for power</li>
+              <li>An atmospheric water generator</li>
+              <li>Rainwater harvesting</li>
+              <li>A bio-digester</li>
+              <li>Aeroponic farming</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SYSTEMS -->
+      <section id="systems" style="background: var(--surface-2)">
+        <div class="wrap">
+          <div class="systems-head reveal">
+            <span class="eyebrow">Off-grid systems</span>
+            <h2>How the village runs itself</h2>
+            <p>Click a system to learn what it does.</p>
+          </div>
+          <div class="systems reveal">
+            <div
+              class="sys-tabs"
+              role="tablist"
+              aria-label="Self-sufficiency systems"
+              id="sysTabs"
+            ></div>
+            <div
+              class="card sys-panel"
+              role="tabpanel"
+              id="sysPanel"
+              tabindex="0"
+              aria-live="polite"
+            ></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FARM -->
+      <section id="farm">
+        <div class="wrap split">
+          <svg
+            class="farm-art reveal"
+            viewBox="0 0 480 380"
+            role="img"
+            aria-labelledby="farmTitle"
+          >
+            <title id="farmTitle">
+              Illustration of aeroponic growing towers, with plant roots hanging
+              in the air and being misted
+            </title>
+            <rect
+              x="0"
+              y="0"
+              width="480"
+              height="380"
+              rx="28"
+              fill="var(--surface-2)"
+            />
+            <path
+              d="M40 330 A200 200 0 0 1 440 330Z"
+              fill="var(--surface)"
+              stroke="var(--line)"
+              stroke-width="2"
+            />
+            <path
+              d="M40 330 L105 210 L175 330 L240 180 L305 330 L375 210 L440 330 M105 210 L170 160 L240 180 L310 160 L375 210"
+              fill="none"
+              stroke="var(--line)"
+              stroke-width="2"
+            />
+            <g>
+              <rect
+                x="140"
+                y="150"
+                width="22"
+                height="180"
+                rx="11"
+                fill="var(--forest)"
+              />
+              <rect
+                x="229"
+                y="130"
+                width="22"
+                height="200"
+                rx="11"
+                fill="var(--forest)"
+              />
+              <rect
+                x="318"
+                y="150"
+                width="22"
+                height="180"
+                rx="11"
+                fill="var(--forest)"
+              />
+            </g>
+            <g fill="var(--leaf)">
+              <ellipse cx="128" cy="175" rx="16" ry="9" />
+              <ellipse cx="174" cy="205" rx="16" ry="9" />
+              <ellipse cx="128" cy="240" rx="16" ry="9" />
+              <ellipse cx="174" cy="275" rx="16" ry="9" />
+              <ellipse cx="217" cy="155" rx="16" ry="9" />
+              <ellipse cx="263" cy="190" rx="16" ry="9" />
+              <ellipse cx="217" cy="225" rx="16" ry="9" />
+              <ellipse cx="263" cy="260" rx="16" ry="9" />
+              <ellipse cx="306" cy="175" rx="16" ry="9" />
+              <ellipse cx="352" cy="205" rx="16" ry="9" />
+              <ellipse cx="306" cy="240" rx="16" ry="9" />
+              <ellipse cx="352" cy="275" rx="16" ry="9" />
+            </g>
+            <g fill="var(--sky)" opacity=".9">
+              <circle cx="196" cy="300" r="4" />
+              <circle cx="204" cy="288" r="3" />
+              <circle cx="286" cy="300" r="4" />
+              <circle cx="294" cy="286" r="3" />
+            </g>
+            <circle cx="400" cy="70" r="26" fill="var(--sun)" />
+          </svg>
+          <div class="reveal">
+            <span class="eyebrow">Aeroponic farming</span>
+            <h2>Gardens that grow in the air</h2>
+            <p>
+              Aeroponics grows plants without soil. The roots hang in the air
+              and are misted with water that carries nutrients. Because there is
+              no soil or other growing medium, nothing has to be replaced or
+              thrown away.
+            </p>
+            <p>
+              At Pualanii, aeroponic farming sits at the centre of the village,
+              right next to the domes.
+            </p>
+            <!-- TODO (owner): add what's grown, whether guests can tour or help, and any farm-to-table details. -->
+          </div>
+        </div>
+      </section>
+
+      <!-- BOOK -->
+      <section class="book" id="book">
+        <div class="wrap">
+          <div class="reveal" style="max-width: 640px; margin-bottom: 36px">
+            <span class="eyebrow">Stay with us</span>
+            <h2>Book your dome</h2>
+            <p>
+              Reserve on our booking page. You'll see current availability and
+              all the details there.
+            </p>
+          </div>
+          <div class="card book-card reveal">
+            <div class="art" aria-hidden="true">
+              <svg viewBox="0 0 280 200">
+                <circle cx="220" cy="46" r="24" fill="var(--sun)" />
+                <path
+                  d="M20 180 A120 120 0 0 1 260 180Z"
+                  fill="var(--dome)"
+                  stroke="var(--dome-line)"
+                  stroke-width="2"
+                />
+                <path
+                  d="M20 180 L60 106 L104 180 L140 92 L176 180 L220 106 L260 180 M60 106 L100 72 L140 92 L180 72 L220 106 M100 72 L140 60 L180 72"
+                  fill="none"
+                  stroke="var(--dome-line)"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M124 180 v-36 a16 16 0 0 1 32 0 v36"
+                  fill="var(--sun)"
+                  stroke="var(--dome-line)"
+                  stroke-width="2"
+                />
+              </svg>
+            </div>
+            <div class="body">
+              <h3 style="font-size: 1.6rem">Self-sufficient Geodesic Domes</h3>
+              <div class="price">
+                <strong>$160</strong
+                ><span
+                  ><!-- TODO (owner): confirm the unit, e.g. "per night" -->as
+                  listed on our booking page</span
+                >
+              </div>
+              <div class="meta">
+                <span>📍 Floyd, VA</span><span>☀️ Solar + wind powered</span
+                ><span>🛋️ Modern interiors</span>
+              </div>
+              <a
+                class="btn btn-primary"
+                href="https://www.pualaniivillagedomes.com/service-page/self-sufficient-geodesic-domes"
+                target="_blank"
+                rel="noopener"
+                >Check availability →</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq">
+        <div class="wrap">
+          <div class="reveal" style="margin-bottom: 28px">
+            <span class="eyebrow">Good to know</span>
+            <h2>Questions, answered</h2>
+          </div>
+          <div class="faq reveal">
+            <details>
+              <summary>Where is Pualanii Village Domes?</summary>
+              <p>
+                In Floyd, Virginia.<!-- TODO (owner): add the street address or directions shared after booking. -->
+              </p>
+            </details>
+            <details>
+              <summary>Is an off-grid dome comfortable?</summary>
+              <p>
+                Yes. Solar panels and wind turbines power the domes, and each
+                dome has modern interiors and conveniences.
+              </p>
+            </details>
+            <details>
+              <summary>Where does the water come from?</summary>
+              <p>
+                The village uses an atmospheric water generator, which pulls
+                moisture out of the air, and also collects rainwater.
+              </p>
+            </details>
+            <details>
+              <summary>What is a geodesic dome?</summary>
+              <p>
+                It's a round structure made from a network of triangles.
+                Triangles spread loads across the whole frame, which makes the
+                shape strong without needing internal supports.
+              </p>
+            </details>
+            <details>
+              <summary>How much does it cost and how do I book?</summary>
+              <p>
+                Our booking page lists the Self-sufficient Geodesic Domes at
+                $160.
+                <a
+                  href="https://www.pualaniivillagedomes.com/service-page/self-sufficient-geodesic-domes"
+                  target="_blank"
+                  rel="noopener"
+                  >Go there</a
+                >
+                to see availability and reserve.
+              </p>
+            </details>
+            <!-- TODO (owner): add check-in/out times, pets, cancellation policy and what to bring. -->
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <div>
+          <a class="brand" href="#top">
+            <svg viewBox="0 0 40 40" aria-hidden="true">
+              <circle cx="20" cy="20" r="19" fill="var(--bg)" />
+              <path d="M8 28a12 12 0 0 1 24 0Z" fill="var(--forest)" />
+              <circle cx="29" cy="11" r="3" fill="var(--sun)" />
+            </svg>
+            Pualanii Village Domes
+          </a>
+          <p style="color: inherit; margin-top: 10px; max-width: 36ch">
+            A self-sufficient eco-retreat and aeroponic community in Floyd,
+            Virginia.
+          </p>
+        </div>
+        <div>
+          <p style="color: inherit; margin-bottom: 6px">
+            <strong style="color: var(--bg)">Plan your stay</strong>
+          </p>
+          <a
+            href="https://www.pualaniivillagedomes.com/service-page/self-sufficient-geodesic-domes"
+            target="_blank"
+            rel="noopener"
+            >Booking page</a
+          >
+          <!-- TODO (owner): add email, phone and social links. -->
+        </div>
+        <small
+          >© <span id="yr"></span> Pualanii Village Domes · Floyd, VA</small
+        >
+      </div>
+    </footer>
+
+    <script>
+      document.body.classList.remove("no-js");
+      document.getElementById("yr").textContent = new Date().getFullYear();
+
+      // Theme toggle (remembered per browser when storage is available)
+      const root = document.documentElement;
+      try {
+        const t = localStorage.getItem("pvd-theme");
+        if (t) root.dataset.theme = t;
+      } catch (e) {}
+      document.getElementById("themeBtn").addEventListener("click", () => {
+        const dark = root.dataset.theme
+          ? root.dataset.theme === "dark"
+          : matchMedia("(prefers-color-scheme: dark)").matches;
+        root.dataset.theme = dark ? "light" : "dark";
+        try {
+          localStorage.setItem("pvd-theme", root.dataset.theme);
+        } catch (e) {}
+      });
+
+      // Mobile menu
+      const menuBtn = document.getElementById("menuBtn"),
+        links = document.getElementById("navLinks");
+      menuBtn.addEventListener("click", () => {
+        const open = links.classList.toggle("open");
+        menuBtn.setAttribute("aria-expanded", open);
+        menuBtn.textContent = open ? "✕" : "☰";
+      });
+      links.addEventListener("click", (e) => {
+        if (e.target.tagName === "A") {
+          links.classList.remove("open");
+          menuBtn.setAttribute("aria-expanded", false);
+          menuBtn.textContent = "☰";
+        }
+      });
+
+      // Sticky nav border
+      const nav = document.getElementById("nav");
+      addEventListener(
+        "scroll",
+        () => nav.classList.toggle("scrolled", scrollY > 8),
+        { passive: true },
+      );
+
+      // Systems explorer. The draft site names each system; the descriptions
+      // explain what that kind of technology does in general terms.
+      const systems = [
+        {
+          ico: "☀️",
+          name: "Solar panels",
+          tag: "Power",
+          text: "Solar panels turn sunlight into electricity. Along with the wind turbines, they power the domes, so the village doesn't need to be connected to the grid.",
+        },
+        {
+          ico: "🌬️",
+          name: "Wind turbines",
+          tag: "Power",
+          text: "Wind turbines make electricity from moving air. They pair well with solar because the wind often blows when the sun isn't out, like at night or on cloudy days.",
+        },
+        {
+          ico: "💧",
+          name: "Atmospheric water generator",
+          tag: "Water",
+          text: "An atmospheric water generator pulls water vapour out of the air and condenses it into liquid water. It works much like the drip from an air conditioner, only designed to collect the water.",
+        },
+        {
+          ico: "🌧️",
+          name: "Rainwater harvesting",
+          tag: "Water",
+          text: "Rainwater harvesting catches and stores the rain that falls on the property so it can be used, instead of letting it run off.",
+        },
+        {
+          ico: "♻️",
+          name: "Bio-digester",
+          tag: "Waste → resource",
+          text: "A bio-digester breaks down organic waste without oxygen. The process produces biogas and a nutrient-rich material, turning waste into something useful.",
+        },
+        {
+          ico: "🌱",
+          name: "Aeroponic farming",
+          tag: "Food",
+          text: "Aeroponic growing hangs plant roots in the air and mists them with nutrient-rich water. No soil is needed.",
+        },
+      ];
+      const tabs = document.getElementById("sysTabs"),
+        panel = document.getElementById("sysPanel");
+      function show(i, focus) {
+        [...tabs.children].forEach((b, j) => {
+          b.setAttribute("aria-selected", j === i);
+          b.tabIndex = j === i ? 0 : -1;
+        });
+        const s = systems[i];
+        panel.setAttribute("aria-labelledby", "tab-" + i);
+        panel.innerHTML = `<div class="big-ico" aria-hidden="true">${s.ico}</div><span class="tag">${s.tag}</span><h3>${s.name}</h3><p>${s.text}</p><p class="note">Part of the self-sufficient setup at Pualanii Village Domes.</p>`;
+        if (focus) tabs.children[i].focus();
+      }
+      systems.forEach((s, i) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "sys-tab";
+        b.role = "tab";
+        b.id = "tab-" + i;
+        b.setAttribute("aria-controls", "sysPanel");
+        b.innerHTML = `<span class="ico" aria-hidden="true">${s.ico}</span>${s.name}`;
+        b.addEventListener("click", () => show(i));
+        b.addEventListener("keydown", (e) => {
+          const k = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[
+            e.key
+          ];
+          if (k) {
+            e.preventDefault();
+            show((i + k + systems.length) % systems.length, true);
+          }
+        });
+        tabs.appendChild(b);
+      });
+      show(0);
+
+      // Reveal on scroll
+      const io =
+        "IntersectionObserver" in window
+          ? new IntersectionObserver(
+              (es) =>
+                es.forEach((e) => {
+                  if (e.isIntersecting) {
+                    e.target.classList.add("in");
+                    io.unobserve(e.target);
+                  }
+                }),
+              { threshold: 0.12 },
+            )
+          : null;
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => (io ? io.observe(el) : el.classList.add("in")));
+    </script>
+  </body>
+</html>
