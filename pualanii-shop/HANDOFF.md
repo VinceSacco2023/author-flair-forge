@@ -1,7 +1,7 @@
 # Handoff — Pualanii Village Domes shop page
 
 ## What was built
-Static one-page shop in this folder: hero, story, 6 product cards, why it matters, build progress, waitlist form, FAQ, footer. Also privacy.html, robots.txt, sitemap.xml, CLAUDE.md. No frameworks or build step.
+Static one-page shop in this folder: hero, story, 6 product cards, why it matters, build progress, waitlist (links to a Wix form), FAQ, footer. Also privacy.html, robots.txt, sitemap.xml, CLAUDE.md. No frameworks or build step.
 
 Checked locally (headless Chromium):
 - W3C Nu validator (vnu.jar): 0 errors on index.html, privacy.html, styles.css
@@ -9,7 +9,6 @@ Checked locally (headless Chromium):
 - No horizontal scroll at 360 / 390 / 768 / 1024 / 1440 px, light and dark mode
 - Product grid 1 / 2 / 3 columns at the required breakpoints
 - Keyboard: skip link works, logical tab order, visible focus
-- Form: empty fields, bad email, honeypot, success and server-failure states
 - All 6 "Shop now" links point at the exact Wix URLs and open in the same tab
 
 Not checked: live share preview (needs the site online — test with the Facebook Sharing Debugger / LinkedIn Post Inspector after deploy). Prices could NOT be verified against the Wix store (it was unreachable from the build environment).
@@ -26,8 +25,8 @@ Not checked: live share preview (needs the site online — test with the Faceboo
 9. [INSTAGRAM URL — ASK OWNER] — footer link and JSON-LD sameAs.
 10. [CONTACT EMAIL] — footer and privacy.html.
 11. Water bottle price — hidden ("See price in store") until confirmed.
-12. Waitlist backend — form has data-endpoint="" (see below).
-13. privacy.html: [DATE], [FORM PROVIDER]. Owner should also confirm the lines "We do not sell your information" and "We will delete your details".
+12. [WIX WAITLIST PAGE URL — ASK OWNER] — the "Join the waitlist" button points at #placeholder-wix-waitlist-url (see below).
+13. privacy.html: [DATE]. Make the "What we collect" list match the fields on the Wix form. Owner should also confirm the lines "We do not sell your information" and "We will delete your details".
 14. Canonical / OG / sitemap URLs assume https://shop.pualaniivillagedomes.com/ — change if the live address differs.
 
 ## Decisions for the owner
@@ -37,10 +36,12 @@ Not checked: live share preview (needs the site online — test with the Faceboo
 - No web font: system fonts are used, so there is no font to preload. Say if you want a brand font.
 - No analytics added (brief says ask first). Product links carry data-product attributes ready for click tagging.
 
-## Waitlist backend
-Pick one, then put its URL in `data-endpoint` on the form in index.html. The script POSTs form data and expects a 2xx response.
-- Hostinger PHP handler: a small mail.php in the same folder (I can write it once you confirm the address it should email).
-- A form service (Formspree, Basin, etc.): paste its form URL. No API keys go in the front end.
+## Waitlist (Wix)
+Decision: Wix collects sign-ups, so contacts and emails live in Wix.
+1. In the Wix Editor, add a page (for example /waitlist) with a Wix Forms form: Name, Email, and a required checkbox "Yes, email me about stays and new products. I can unsubscribe anytime." Turn on the setting that adds submitters to your Wix contacts / email subscribers.
+2. Publish the Wix site, then put that page's URL in index.html in place of `#placeholder-wix-waitlist-url` and delete the "[WIX WAITLIST PAGE URL — ASK OWNER]" note.
+3. Send the emails from Wix (Email Marketing), which includes an unsubscribe link.
+Exact Wix menu names were not checked from here — follow Wix's current Help Center wording.
 
 ## Deploy to Hostinger
 1. hPanel → Files → File Manager → open public_html (or the subdomain's folder).

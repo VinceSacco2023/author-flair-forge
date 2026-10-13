@@ -6,7 +6,7 @@ Static one-page shop (HTML/CSS/vanilla JS, no build step) that sends buyers to t
 
 - `index.html` — the page. Product data lives in ONE block: the `<ul class="product-grid">` in the "Featured products" section.
 - `css/styles.css` — all styles. Tokens (colors, spacing, type) on `:root`; dark mode redefines the same tokens.
-- `js/main.js` — footer year + waitlist form validation/submit. One IIFE, `'use strict'`.
+- `js/main.js` — footer year only. One IIFE, `'use strict'`.
 - `privacy.html`, `robots.txt`, `sitemap.xml`
 - `img/` — optimized images only (WebP; hero ≤ 200 KB, others ≤ 120 KB). Current images are labeled PLACEHOLDERs.
 
@@ -33,10 +33,10 @@ Static one-page shop (HTML/CSS/vanilla JS, no build step) that sends buyers to t
 - No new dependencies, frameworks or build tools without asking the owner.
 - No console logs or dead code.
 
-## Waitlist form
+## Waitlist
 
-`<form data-endpoint="">` — empty until the owner chooses a backend (Hostinger PHP handler or a form service). With no endpoint the form validates, then tells the visitor sign-ups aren't on yet. Never hard-code API keys in front-end code. Honeypot field `website` drops bot submissions.
+Owner decision: sign-ups are collected by a Wix Forms page on pualaniivillagedomes.com, so Wix stores contacts and sends email. This page has no form — the "Join the waitlist" button links to that Wix page (`#placeholder-wix-waitlist-url` until the owner sends the URL). Don't add a form backend or API keys here.
 
 ## Before saying "done"
 
-Check the Definition of Done list in the owner's brief: all 8 sections, links, prices, placeholders listed, W3C-valid HTML, Lighthouse mobile (Perf ≥ 90, A11y ≥ 95, BP ≥ 95, SEO ≥ 95), no horizontal scroll at 360/768/1440, keyboard navigation, form states, share preview.
+Check the Definition of Done list in the owner's brief: all 8 sections, links, prices, placeholders listed, W3C-valid HTML, Lighthouse mobile (Perf ≥ 90, A11y ≥ 95, BP ≥ 95, SEO ≥ 95), no horizontal scroll at 360/768/1440, keyboard navigation, waitlist button opens the Wix form, share preview.

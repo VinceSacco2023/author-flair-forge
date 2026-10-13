@@ -328,72 +328,22 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--color-muted);
 }
 
-/* ---------- Waitlist form ---------- */
-.waitlist {
-  display: grid;
-  gap: var(--s-4);
-}
-.field label {
-  display: block;
-  font-weight: 700;
-  margin-bottom: var(--s-1);
-}
-.field input[type="text"],
-.field input[type="email"] {
-  width: 100%;
-  min-height: 48px;
-  padding: var(--s-2) var(--s-3);
-  font: inherit;
-  color: var(--color-text);
-  background: var(--color-surface);
-  border: 2px solid var(--color-muted);
-  border-radius: var(--radius);
-}
-.field input[aria-invalid="true"] { border-color: var(--color-error); }
-.field--check {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: var(--s-1) var(--s-3);
-  align-items: start;
-}
-.field--check input {
-  width: 24px;
-  height: 24px;
-  margin: 0;
-  margin-top: var(--s-1);
-  accent-color: var(--color-forest);
-}
-.field--check label { font-weight: 400; margin: 0; }
-.field--check .field__error { grid-column: 1 / -1; }
-.field__error {
-  color: var(--color-error);
-  font-weight: 700;
-  font-size: var(--text-small);
-  margin: var(--s-1) 0 0;
-}
+/* ---------- Waitlist ---------- */
 .waitlist__actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--s-4);
 }
-.waitlist__actions a {
+.waitlist__actions a:not(.btn) {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
 }
-.form-status { margin: 0; font-weight: 700; }
-.form-status:empty { display: none; }
-.form-status.is-success { color: var(--color-success); }
-.form-status.is-error { color: var(--color-error); }
-
-/* Honeypot: off-screen, not display:none, so simple bots still fill it */
-.hp {
-  position: absolute;
-  left: -9999px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
+.waitlist__note {
+  margin: var(--s-3) 0 0;
+  font-size: var(--text-small);
+  color: var(--color-muted);
 }
 
 /* ---------- FAQ ---------- */

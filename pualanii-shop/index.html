@@ -189,34 +189,12 @@
       <div class="container container--narrow">
         <h2 id="waitlist-title">Join the waitlist</h2>
         <p class="section__lead">Be first to hear when stays open and new products drop.</p>
-        <!-- data-endpoint stays empty until the owner picks a backend (Hostinger PHP handler or a form service). -->
-        <form class="waitlist" id="waitlist-form" data-endpoint="" novalidate>
-          <div class="field">
-            <label for="wl-name">Name</label>
-            <input id="wl-name" name="name" type="text" autocomplete="name" required aria-describedby="wl-name-error">
-            <p class="field__error" id="wl-name-error" hidden></p>
-          </div>
-          <div class="field">
-            <label for="wl-email">Email</label>
-            <input id="wl-email" name="email" type="email" autocomplete="email" required aria-describedby="wl-email-error">
-            <p class="field__error" id="wl-email-error" hidden></p>
-          </div>
-          <!-- Honeypot: hidden from people, filled by bots. Submissions with a value are dropped. -->
-          <div class="hp" aria-hidden="true">
-            <label for="wl-website">Leave this field empty</label>
-            <input id="wl-website" name="website" type="text" tabindex="-1" autocomplete="off">
-          </div>
-          <div class="field field--check">
-            <input id="wl-consent" name="consent" type="checkbox" required aria-describedby="wl-consent-error">
-            <label for="wl-consent">Yes, email me about stays and new products. I can unsubscribe anytime.</label>
-            <p class="field__error" id="wl-consent-error" hidden></p>
-          </div>
-          <div class="waitlist__actions">
-            <button class="btn" type="submit">Join the waitlist</button>
-            <a href="privacy.html">Privacy policy</a>
-          </div>
-          <p class="form-status" id="wl-status" role="status" aria-live="polite"></p>
-        </form>
+        <!-- Sign-ups are collected by a Wix Forms page on the main site, so Wix stores the contacts and sends the emails. -->
+        <div class="waitlist__actions">
+          <a class="btn" href="#placeholder-wix-waitlist-url">Join the waitlist</a>
+          <a href="privacy.html">Privacy policy</a>
+        </div>
+        <p class="waitlist__note">Opens our sign-up form on pualaniivillagedomes.com. [WIX WAITLIST PAGE URL — ASK OWNER]</p>
       </div>
     </section>
 
